@@ -6,23 +6,30 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-sub-menu index="System">
+      <el-sub-menu index="system">
         <template #title>系统管理</template>
-        <el-menu-item index="User">用户管理</el-menu-item>
-        <el-menu-item index="Role">角色管理</el-menu-item>
-        <el-menu-item index="Dict">字典管理</el-menu-item>
+        <el-menu-item index="user">用户管理</el-menu-item>
+        <el-menu-item index="role">角色管理</el-menu-item>
+        <el-menu-item index="dict">字典管理</el-menu-item>
       </el-sub-menu>
     </el-menu>
   </div>
 </template>
 
 <script setup lang="tsx" name="haoziLayoutColumnHeader">
-import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-const activeIndex = ref('1')
+/** 获取当前路由信息 */
+const route = useRoute()
+const activeIndex = ref(route.name)
+
+/** 操作路由 */
+const router = useRouter()
 const handleSelect = (key: string) => {
-  ElMessage.info(`点击了 ${key}`)
+  router.push({
+    name: key,
+  })
 }
 </script>
 

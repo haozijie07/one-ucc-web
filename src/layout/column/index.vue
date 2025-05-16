@@ -4,7 +4,9 @@
       <el-header>
         <haozi-layout-column-header />
       </el-header>
-      <el-main>Main</el-main>
+      <el-main>
+        <haozi-layout-main />
+      </el-main>
       <el-footer>
         <haozi-layout-footer />
       </el-footer>
@@ -15,6 +17,7 @@
 <script setup lang="tsx" name="haoziLayoutColumn">
 import haoziLayoutColumnHeader from './components/layout-header.vue'
 import haoziLayoutFooter from './components/layout-footer.vue'
+import haoziLayoutMain from './components/layout-main.vue'
 </script>
 
 <style scoped lang="scss">
