@@ -6,6 +6,7 @@
       mode="horizontal"
       @select="handleSelect"
     >
+      <el-menu-item index="home">首页</el-menu-item>
       <el-sub-menu index="system">
         <template #title>系统管理</template>
         <el-menu-item index="user">用户管理</el-menu-item>
@@ -22,7 +23,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 /** 获取当前路由信息 */
 const route = useRoute()
-const activeIndex = ref(route.name)
+const activeIndex = ref(route.name || 'home')
 
 /** 操作路由 */
 const router = useRouter()
