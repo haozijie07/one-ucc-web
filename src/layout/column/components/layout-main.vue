@@ -1,6 +1,6 @@
 <template>
   <div class="haozi-layout-main">
-    <router-view />
+    <router-view style="height: 100%" />
   </div>
 </template>
 

@@ -26,6 +26,9 @@ import haoziLayoutMain from './components/layout-main.vue'
 
   .el-container {
     height: 100%;
+    .el-main {
+      padding: 0;
+    }
 
     .el-footer {
       height: 30px;

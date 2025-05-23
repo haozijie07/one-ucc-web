@@ -1,6 +1,6 @@
 <template>
   <div class="haozi-table">
-    <el-card class="haozi-table-search-card" v-if="mergeTableConfig.showSearch">
+    <el-card class="haozi-table-search-card" v-if="mergeTableConfig.showSearch && tableSearch">
       <SearchForm
         ref="searchFormRef"
         :table-search="tableSearch"
@@ -25,7 +25,7 @@
         >
           <vxe-column v-if="mergeTableConfig.showCheckbox" type="checkbox" width="40"></vxe-column>
           <vxe-column v-if="mergeTableConfig.showSeq" type="seq" width="70"></vxe-column>
-          <template v-for="(item, index) in tableColumn" :key="item.field">
+          <template v-for="item in tableColumn" :key="item.field">
             <vxe-column
               :field="item.field"
               :title="item.title"
@@ -57,7 +57,7 @@
             v-model:page-size="pageSize"
             :page-sizes="[20, 100, 200, 300, 400]"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="tableData.length"
+            :total="total"
             @size-change="handleSizeChange"
             @current-change="handleIndexChange"
           />
@@ -85,7 +85,7 @@ const props = withDefaults(
 
 const mergeTableConfig = computed(() => {
   return {
-    showSearch: props.tableSearch?.length > 0,
+    showSearch: props.tableSearch,
     showSeq: true,
     showCheckbox: false,
     showPage: true,
@@ -94,8 +94,6 @@ const mergeTableConfig = computed(() => {
     ...props.tableConfig,
   }
 })
-
-const emits = defineEmits<{}>()
 
 const loading = ref(false)
 const tableRef = useTemplateRef('tableRef')
@@ -110,7 +108,7 @@ async function onSearch() {
   loading.value = true
   const conditions: Condition[] = []
   for (const index in props.tableSearch) {
-    const search = props.tableSearch[index]
+    const search = props.tableSearch[+index]
 
     conditions.push({
       field: searchFormData.value[`${search.field}_field`],
@@ -126,7 +124,8 @@ async function onSearch() {
       pageIndex: pageIndex.value,
       conditions,
     })
-    tableData.value = result
+    tableData.value = result.data
+    total.value = result.total
   } catch (error) {
     console.log('%c⧭', 'color: #731d1d', error)
   } finally {
