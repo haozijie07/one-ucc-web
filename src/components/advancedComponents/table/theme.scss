@@ -1,0 +1,26 @@
+.vxe-table {
+  --vxe-ui-font-primary-color: var(--el-color-primary);
+
+  .vxe-table--footer {
+    background-color: transparent;
+    .vxe-footer--column {
+      // padding: 8px 0;
+    }
+    .col_gutter {
+      background-color: transparent;
+    }
+    .vxe-footer--row {
+      background-color: transparent;
+      .vxe-footer--column {
+        background-color: #f5f7fa;
+
+        .vxe-cell {
+          height: fit-content !important;
+        }
+      }
+    }
+  }
+  .vxe-table--empty-block {
+    height: 100%;
+  }
+}
