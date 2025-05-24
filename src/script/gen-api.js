@@ -264,8 +264,26 @@ fetchSwaggerJson(swaggerSource, (err, swagger) => {
   const apiCode = generateApi(swagger)
 
   // 文件写入
-  fs.writeFileSync(path.join(outputDir, 'types.d.ts'), typesCode, 'utf-8')
-  fs.writeFileSync(path.join(outputDir, 'api.ts'), apiCode, 'utf-8')
+  let apiFileName, typeFileName
+  const typeFile = path.join(outputDir, 'types.d.ts')
+  if (fs.existsSync(typeFile)) {
+    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+    fs.writeFileSync(path.join(outputDir, './back/types.d.ts'), typesCode, 'utf-8')
+    typeFileName = 'api/back/types.d.ts'
+  } else {
+    fs.writeFileSync(path.join(outputDir, 'types.d.ts'), typesCode, 'utf-8')
+    typeFileName = 'types.d.ts'
+  }
 
-  console.log('✅ 已生成：api/types.d.ts 与 api/api.ts')
+  const apiFile = path.join(outputDir, 'api.ts')
+  if (fs.existsSync(apiFile)) {
+    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+    fs.writeFileSync(path.join(outputDir, './back/api.ts'), apiCode, 'utf-8')
+    apiFileName = 'api/back/api.ts'
+  } else {
+    fs.writeFileSync(path.join(outputDir, 'api.ts'), apiCode, 'utf-8')
+    apiFileName = 'api/api.ts'
+  }
+
+  console.log(`✅ 已生成：${typeFileName} 与 ${apiFileName}`)
 })
