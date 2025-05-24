@@ -46,7 +46,7 @@ function fetchSwaggerJson(swaggerUrl, callback) {
  */
 function resolveType(prop) {
   if (!prop) return 'any'
-  if (prop.$ref) return `Types.${prop.$ref.split('/').pop()}` // 通常是一个dto的名称
+  if (prop.$ref) return `Types.API${prop.$ref.split('/').pop()}` // 通常是一个dto的名称
   if (prop.type === 'array') return `${resolveType(prop.items)}[]`
   if (prop.enum) return prop.enum.map((v) => `'${v}'`).join(' | ')
   switch (prop.type) {
@@ -78,7 +78,7 @@ function generateTypes(schemas) {
   // 每个name都是一个dto，用来对应ts的interface名称
   for (const name in schemas) {
     const schema = schemas[name]
-    lines.push(`export interface ${name} {`)
+    lines.push(`export interface ${'API' + name} {`)
     // schema.properties是一个对象，里面是每个字段的信息：字段：{ type, description }
     const props = schema.properties || {}
     // required是一个数组，里面是必填的字段
@@ -179,8 +179,9 @@ function generateApi(swagger) {
       // 拼接路径：url + params
       const finalPath = route.replace(/{([^}]+)}/g, (_, key) => `\${params.${key}}`)
 
+      lines.push(`/** ${api.summary} */`)
       lines.push(
-        `export function ${fnName}(${tsParams.length ? tsParams.join(', ') + ',' : ''} config?: RequestConfig): Promise<${returnType}> {`,
+        `export async function ${fnName}(${tsParams.length ? tsParams.join(', ') + ',' : ''} config?: RequestConfig): Promise<${returnType}> {`,
       )
       lines.push(`  const url = \`${finalPath}\`;`)
       if (method === 'get' || method === 'delete') {
@@ -193,7 +194,7 @@ function generateApi(swagger) {
         }
       } else {
         lines.push(
-          `  return uccAxios.${method}(url, ${requestBodySchema ? 'data' : 'null'}, { ...config });`,
+          `  return await uccAxios.${method}(url, ${requestBodySchema ? 'data' : 'null'}, { ...config });`,
         )
       }
 
