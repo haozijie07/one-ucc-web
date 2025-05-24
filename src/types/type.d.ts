@@ -3,3 +3,8 @@ interface ICommonAxiosResponse<T> {
   message: string
   data: T
 }
+
+interface IPageListData<T> {
+  total: number
+  data: T[]
+}
