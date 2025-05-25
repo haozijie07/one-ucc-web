@@ -45,12 +45,19 @@ export interface APIUpdateUserDto {
   position?: string;
   /** 部门 */
   department?: string;
+  /** 创建时间 */
   createdAt?: string;
+  /** 创建人 */
   createdBy?: string;
+  /** 更新时间 */
   updatedAt?: string;
+  /** 更新人 */
   updatedBy?: string;
+  /** 删除时间 */
   deletedAt?: string;
+  /** 删除人 */
   deletedBy?: string;
+  /** 备注 */
   remark?: string;
 }
 
@@ -91,12 +98,19 @@ export interface APICreateUserDto {
   position: string;
   /** 部门 */
   department: string;
+  /** 创建时间 */
   createdAt?: string;
+  /** 创建人 */
   createdBy: string;
+  /** 更新时间 */
   updatedAt?: string;
+  /** 更新人 */
   updatedBy?: string;
+  /** 删除时间 */
   deletedAt?: string;
+  /** 删除人 */
   deletedBy?: string;
+  /** 备注 */
   remark?: string;
 }
 
