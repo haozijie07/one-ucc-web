@@ -112,7 +112,7 @@ function toCamelCase(str) {
 
 /**
  *
- * @param {Object} schemas 响应体数据描述
+ * @param {Object} schemas 字段数据描述
  * @returns
  */
 function generateTypes(schemas) {
@@ -247,6 +247,69 @@ function generateApi(swagger) {
   return lines.join('\n')
 }
 
+/**
+ *
+ * @param {Object} schemas 字段数据描述
+ * @returns
+ */
+function generateTableFormConfig(schemas) {
+  let tableColumn = [`// Auto-generated from swagger`, ``]
+  let tableSearch = [`// Auto-generated from swagger`, ``]
+  let formConfig = [`// Auto-generated from swagger`, ``]
+  // 每个name都是一个dto，用来对应ts的interface名称
+  for (const name in schemas) {
+    if (!name.startsWith('Create')) continue
+    const schema = schemas[name]
+    tableColumn.push(`const ${name}TableColumn = [`)
+    tableSearch.push(`const ${name}TableSearch = [`)
+    formConfig.push(`const ${name}FormConfig = [`)
+    // schema.properties是一个对象，里面是每个字段的信息：字段：{ type, description }
+    const props = schema.properties || {}
+    // required是一个数组，里面是必填的字段
+    const required = schema.required || []
+    for (const key in props) {
+      tableColumn.push(`  {`)
+      tableSearch.push(`  {`)
+      formConfig.push(`  {`)
+      // 字段名
+      const prop = props[key]
+      // 是否必填
+      const isRequired = required.includes(key)
+      // 可选表达式
+      const optional = isRequired ? '' : '?'
+      // 字段类型
+      const type = resolveType(prop)
+      // 字段描述
+      const description = prop.description || ''
+
+      tableColumn.push(`    field: '${key}',`)
+      tableColumn.push(`    title: '${prop.description}',`)
+      tableColumn.push(`    width: 100,`)
+      tableColumn.push(`  },`)
+
+      tableSearch.push(`    field: '${key}',`)
+      tableSearch.push(`    title: '${prop.description}',`)
+      tableSearch.push(`    type: 'text',`)
+      tableSearch.push(`  },`)
+
+      formConfig.push(`    prop: '${key}',`)
+      formConfig.push(`    label: '${prop.description}',`)
+      formConfig.push(`    type: 'text',`)
+      formConfig.push(`  },`)
+    }
+  }
+
+  tableSearch.push(']\n')
+  tableColumn.push(']\n')
+  formConfig.push(']\n')
+
+  return {
+    tableColumn: tableColumn.join('\n'),
+    tableSearch: tableSearch.join('\n'),
+    formConfig: formConfig.join('\n'),
+  }
+}
+
 // ---------- MAIN ----------
 fetchSwaggerJson(swaggerSource, (err, swagger) => {
   if (err) {
@@ -263,8 +326,14 @@ fetchSwaggerJson(swaggerSource, (err, swagger) => {
   // 生成各请求对应的请求函数
   const apiCode = generateApi(swagger)
 
+  // 生成表格配置、表单配置
+  const { tableColumn, tableSearch, formConfig } = generateTableFormConfig(
+    swagger.components?.schemas || {},
+  )
+
   // 文件写入
-  let apiFileName, typeFileName
+  // 类型
+  let typeFileName
   const typeFile = path.join(outputDir, 'types.d.ts')
   if (fs.existsSync(typeFile)) {
     fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
@@ -275,6 +344,8 @@ fetchSwaggerJson(swaggerSource, (err, swagger) => {
     typeFileName = 'types.d.ts'
   }
 
+  // api
+  let apiFileName
   const apiFile = path.join(outputDir, 'api.ts')
   if (fs.existsSync(apiFile)) {
     fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
@@ -285,5 +356,43 @@ fetchSwaggerJson(swaggerSource, (err, swagger) => {
     apiFileName = 'api/api.ts'
   }
 
-  console.log(`✅ 已生成：${typeFileName} 与 ${apiFileName}`)
+  // tableColumn
+  let tableConfigFileName
+  const tableConfigFile = path.join(outputDir, 'tableColumn.ts')
+  if (fs.existsSync(tableConfigFile)) {
+    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+    fs.writeFileSync(path.join(outputDir, './back/tableColumn.ts'), tableColumn, 'utf-8')
+    tableConfigFileName = 'api/back/tableColumn.ts'
+  } else {
+    fs.writeFileSync(path.join(outputDir, 'tableColumn.ts'), tableColumn, 'utf-8')
+    tableConfigFileName = 'api/tableColumn.ts'
+  }
+
+  // tableSearch
+  let tableSearchFileName
+  const tableSearchFile = path.join(outputDir, 'tableSearch.ts')
+  if (fs.existsSync(tableSearchFile)) {
+    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+    fs.writeFileSync(path.join(outputDir, './back/tableSearch.ts'), tableSearch, 'utf-8')
+    tableSearchFileName = 'api/back/tableSearch.ts'
+  } else {
+    fs.writeFileSync(path.join(outputDir, 'tableSearch.ts'), tableSearch, 'utf-8')
+    tableSearchFileName = 'api/tableSearch.ts'
+  }
+
+  // formConfig
+  let formConfigFileName
+  const formConfigFile = path.join(outputDir, 'formConfig.ts')
+  if (fs.existsSync(formConfigFile)) {
+    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+    fs.writeFileSync(path.join(outputDir, './back/formConfig.ts'), formConfig, 'utf-8')
+    formConfigFileName = 'api/back/formConfig.ts'
+  } else {
+    fs.writeFileSync(path.join(outputDir, 'formConfig.ts'), formConfig, 'utf-8')
+    formConfigFileName = 'api/formConfig.ts'
+  }
+
+  console.log(
+    `✅ 已生成：${typeFileName} 与 ${apiFileName} 与 ${tableConfigFileName} 与 ${tableSearchFileName} 与 ${formConfigFileName}`,
+  )
 })
