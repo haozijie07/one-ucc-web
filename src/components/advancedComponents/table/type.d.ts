@@ -52,6 +52,8 @@ declare global {
     type: widgetType
     title: string
     placeholder?: string
+    startPlaceholder?: string
+    endPlaceholder?: string
     operator?: Operator
     defaultValue?: string | number
     options?: SelectOptionType[]

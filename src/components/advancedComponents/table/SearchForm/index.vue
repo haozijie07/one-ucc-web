@@ -2,7 +2,7 @@
   <div class="haozi-table-search">
     <el-form ref="formRef" :model="searchFormData" label-width="auto">
       <el-row :gutter="20">
-        <template v-for="(searchItem, searchIndex) in tableSearch" :key="searchItem.field">
+        <template v-for="(searchItem, searchIndex) in tableSearchComputed" :key="searchItem.field">
           <el-col v-if="searchIndex < 6" :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
             <el-form-item
               :label="searchItem.title"
@@ -13,7 +13,7 @@
                 <el-select
                   style="width: 120px; margin: 0 10px; flex-shrink: 0"
                   v-model="searchFormData[`${searchItem.field}_operator`]"
-                  placeholder="请选择"
+                  :placeholder="searchItem.placeholder"
                   v-bind="searchItem.itemProps"
                 >
                   <el-option
@@ -28,7 +28,7 @@
                   <el-input
                     style="flex-grow: 1"
                     v-model="searchFormData[`${searchItem.field}_value`]"
-                    placeholder="请输入"
+                    :placeholder="searchItem.placeholder"
                     v-bind="searchItem.itemProps"
                   />
                 </template>
@@ -38,13 +38,14 @@
                     v-model="searchFormData[`${searchItem.field}_value`]"
                     :min="-99999"
                     :max="99999"
+                    :placeholder="searchItem.placeholder"
                     v-bind="searchItem.itemProps"
                   />
                 </template>
                 <template v-else-if="searchItem.type === 'select'">
                   <el-select
                     v-model="searchFormData[`${searchItem.field}_value`]"
-                    placeholder="请选择"
+                    :placeholder="searchItem.placeholder"
                     v-bind="searchItem.itemProps"
                   >
                     <el-option
@@ -58,7 +59,7 @@
                 <template v-else-if="searchItem.type === 'multiselect'">
                   <el-select
                     v-model="searchFormData[`${searchItem.field}_value`]"
-                    placeholder="请选择"
+                    :placeholder="searchItem.placeholder"
                     :multiple="true"
                     v-bind="searchItem.itemProps"
                   >
@@ -101,7 +102,7 @@
                   <el-date-picker
                     v-model="searchFormData[`${searchItem.field}_value`]"
                     type="date"
-                    placeholder="请选择"
+                    :placeholder="searchItem.placeholder"
                     style="flex-grow: 1"
                     v-bind="searchItem.itemProps"
                   />
@@ -110,7 +111,7 @@
                   <el-date-picker
                     v-model="searchFormData[`${searchItem.field}_value`]"
                     type="datetime"
-                    placeholder="请选择"
+                    :placeholder="searchItem.placeholder"
                     style="flex-grow: 1"
                     v-bind="searchItem.itemProps"
                   />
@@ -119,7 +120,8 @@
                   <el-date-picker
                     v-model="searchFormData[`${searchItem.field}_value`]"
                     type="daterange"
-                    placeholder="请选择"
+                    :start-placeholder="searchItem.startPlaceholder"
+                    :end-placeholder="searchItem.endPlaceholder"
                     style="flex-grow: 1"
                     v-bind="searchItem.itemProps"
                   />
@@ -128,7 +130,8 @@
                   <el-date-picker
                     v-model="searchFormData[`${searchItem.field}_value`]"
                     type="datetimerange"
-                    placeholder="请选择"
+                    :start-placeholder="searchItem.startPlaceholder"
+                    :end-placeholder="searchItem.endPlaceholder"
                     style="flex-grow: 1"
                     v-bind="searchItem.itemProps"
                   />
@@ -147,13 +150,38 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { operatorMap } from '../utils/operator-map'
 import type { ElForm } from 'element-plus'
 
 const props = defineProps<{
   tableSearch: ITableSearch[]
 }>()
+
+const tableSearchComputed = computed(() => {
+  const placeholderMap: Record<string, string> = {
+    text: '请输入',
+    textarea: '请输入',
+    select: '请选择',
+    date: '请选择',
+    datetime: '请选择',
+    daterange: '请选择',
+    datetimerange: '请选择',
+    number: '请输入',
+    radio: '请选择',
+    checkbox: '请选择',
+    switch: '请选择',
+    custom: '',
+  }
+  return props.tableSearch.map((item) => {
+    return {
+      ...item,
+      placeholder: item.placeholder || placeholderMap[item.type] + item.title,
+      startPlaceholder: item.startPlaceholder || placeholderMap[item.type] + '开始' + item.title,
+      endPlaceholder: item.endPlaceholder || placeholderMap[item.type] + '结束' + item.title,
+    }
+  })
+})
 
 const emits = defineEmits<{
   (e: 'onSearch'): void
@@ -166,7 +194,7 @@ const searchFormData = defineModel<any>('searchFormData', { default: {} })
 
 /** 表单初始化 */
 function initSearchFormData(prop?: string | string[]) {
-  props.tableSearch.forEach((item) => {
+  tableSearchComputed.value.forEach((item) => {
     if (prop) {
       if (prop !== item.field) return
       if (Array.isArray(prop) && !prop.includes(item.field)) return
