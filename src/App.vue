@@ -6,6 +6,12 @@
 
 <script setup lang="ts">
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import { useChangeColor } from '@/utils/calcColor'
+
+const { getLightColor } = useChangeColor()
+for (let i = 1; i <= 9; i++) {
+  document.body.style.setProperty(`--el-color-primary-light-${i}`, getLightColor('#4caf50', i / 10))
+}
 </script>
 
 <style>
