@@ -11,6 +11,7 @@
 </template>
 
 <script setup lang="tsx" name="user">
+import { UserControllerPageList } from '@/api/api'
 import { HaoziTable } from '@/components/advancedComponents/index'
 import { ref } from 'vue'
 
@@ -273,7 +274,9 @@ const tableData = ref([
     username: 'admin',
   },
 ])
-async function getDataFn() {
+async function getDataFn(conditions: any) {
+  const res = await UserControllerPageList(conditions)
+  console.log('%c⧭', 'color: #731d6d', res)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({

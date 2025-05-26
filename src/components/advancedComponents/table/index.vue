@@ -110,12 +110,14 @@ async function onSearch() {
   for (const index in props.tableSearch) {
     const search = props.tableSearch[+index]
 
-    conditions.push({
-      field: searchFormData.value[`${search.field}_field`],
-      operator: searchFormData.value[`${search.field}_operator`],
-      value: searchFormData.value[`${search.field}_value`],
-      widget: search.type,
-    })
+    if (!!searchFormData.value[`${search.field}_value`]) {
+      conditions.push({
+        field: searchFormData.value[`${search.field}_field`],
+        operator: searchFormData.value[`${search.field}_operator`],
+        value: searchFormData.value[`${search.field}_value`],
+        widget: search.type,
+      })
+    }
   }
 
   try {

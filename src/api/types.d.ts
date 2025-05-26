@@ -1,137 +1,137 @@
 // Auto-generated from swagger
 
-export interface APICommonResponse {
-  code: number;
-  message: string;
-  data: Record<string, any>;
+interface APICommonResponse {
+  code: number
+  message: string
+  data: Record<string, any>
 }
 
-export interface APIUpdateUserDto {
+interface APIUpdateUserDto {
   /** id */
-  id: string;
+  id: string
   /** 用户名 */
-  username?: string;
+  username?: string
   /** 密码 */
-  password?: string;
+  password?: string
   /** 姓名 */
-  name?: string;
+  name?: string
   /** 头像 */
-  avatar?: string;
+  avatar?: string
   /** 邮箱 */
-  email?: string;
+  email?: string
   /** 手机号 */
-  mobile?: string;
+  mobile?: string
   /** 性别 */
-  sex?: string;
+  sex?: string
   /** 地址 */
-  address?: string;
+  address?: string
   /** 籍贯 */
-  nativeAddress?: string;
+  nativeAddress?: string
   /** 身份证号码 */
-  idCard?: string;
+  idCard?: string
   /** 是否启用 */
-  isEnable?: boolean;
+  isEnable?: boolean
   /** 最后登录时间 */
-  lastLoginAt?: string;
+  lastLoginAt?: string
   /** 登录失败次数 */
-  loginFailCount?: number;
+  loginFailCount?: number
   /** 登录锁定时间 */
-  loginLockedUnitl?: string;
+  loginLockedUnitl?: string
   /** 入职时间 */
-  joinTime?: string;
+  joinTime?: string
   /** 离职时间 */
-  leaveTime?: string;
+  leaveTime?: string
   /** 职位 */
-  position?: string;
+  position?: string
   /** 部门 */
-  department?: string;
+  department?: string
   /** 创建时间 */
-  createdAt?: string;
+  createdAt?: string
   /** 创建人 */
-  createdBy?: string;
+  createdBy?: string
   /** 更新时间 */
-  updatedAt?: string;
+  updatedAt?: string
   /** 更新人 */
-  updatedBy?: string;
+  updatedBy?: string
   /** 删除时间 */
-  deletedAt?: string;
+  deletedAt?: string
   /** 删除人 */
-  deletedBy?: string;
+  deletedBy?: string
   /** 备注 */
-  remark?: string;
+  remark?: string
 }
 
-export interface APICreateUserDto {
+interface APICreateUserDto {
   /** 用户名 */
-  username: string;
+  username: string
   /** 密码 */
-  password: string;
+  password: string
   /** 姓名 */
-  name: string;
+  name: string
   /** 头像 */
-  avatar?: string;
+  avatar?: string
   /** 邮箱 */
-  email: string;
+  email: string
   /** 手机号 */
-  mobile: string;
+  mobile: string
   /** 性别 */
-  sex: string;
+  sex: string
   /** 地址 */
-  address: string;
+  address: string
   /** 籍贯 */
-  nativeAddress: string;
+  nativeAddress: string
   /** 身份证号码 */
-  idCard: string;
+  idCard: string
   /** 是否启用 */
-  isEnable: boolean;
+  isEnable: boolean
   /** 最后登录时间 */
-  lastLoginAt?: string;
+  lastLoginAt?: string
   /** 登录失败次数 */
-  loginFailCount: number;
+  loginFailCount: number
   /** 登录锁定时间 */
-  loginLockedUnitl?: string;
+  loginLockedUnitl?: string
   /** 入职时间 */
-  joinTime: string;
+  joinTime: string
   /** 离职时间 */
-  leaveTime?: string;
+  leaveTime?: string
   /** 职位 */
-  position: string;
+  position: string
   /** 部门 */
-  department: string;
+  department: string
   /** 创建时间 */
-  createdAt?: string;
+  createdAt?: string
   /** 创建人 */
-  createdBy: string;
+  createdBy: string
   /** 更新时间 */
-  updatedAt?: string;
+  updatedAt?: string
   /** 更新人 */
-  updatedBy?: string;
+  updatedBy?: string
   /** 删除时间 */
-  deletedAt?: string;
+  deletedAt?: string
   /** 删除人 */
-  deletedBy?: string;
+  deletedBy?: string
   /** 备注 */
-  remark?: string;
+  remark?: string
 }
 
-export interface APICondition {
+interface APICondition {
   /** 字段名 */
-  field: string;
+  field: string
   /** 操作符 */
-  operator: 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'like' | 'in' | 'between';
+  operator: 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'like' | 'in' | 'between'
   /** 值 */
-  value?: Record<string, any>;
+  value?: Record<string, any>
 }
 
-export interface APIQueryDto {
+interface APIQueryDto {
   /** 当前页码 */
-  pageIndex: number;
+  pageIndex: number
   /** 每页条数 */
-  pageSize: number;
+  pageSize: number
   /** 过滤条件 */
-  conditions?: Types.APICondition[];
+  conditions?: Types.APICondition[]
   /** 排序字段 */
-  sortBy: string;
+  sortBy: string
   /** 排序顺序 */
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: 'asc' | 'desc'
 }
