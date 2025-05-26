@@ -120,7 +120,7 @@ function generateTypes(schemas) {
   // 每个name都是一个dto，用来对应ts的interface名称
   for (const name in schemas) {
     const schema = schemas[name]
-    lines.push(`export interface ${'API' + name} {`)
+    lines.push(`interface ${'API' + name} {`)
     // schema.properties是一个对象，里面是每个字段的信息：字段：{ type, description }
     const props = schema.properties || {}
     // required是一个数组，里面是必填的字段
@@ -153,14 +153,7 @@ function generateTypes(schemas) {
  */
 function generateApi(swagger) {
   const baseURL = swaggerSource || ''
-  let lines = [
-    `import * as Types from './types';`,
-    ``,
-    `import { uccAxios } from '@/request';`,
-    ``,
-    `const baseURL = '${baseURL}';`,
-    ``,
-  ]
+  let lines = [`import { uccAxios } from '@/request';`, ``, `const baseURL = '${baseURL}';`, ``]
 
   // route: 路由/请求路径
   for (const route in swagger.paths) {
