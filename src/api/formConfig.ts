@@ -64,7 +64,7 @@ const CreateUserDtoFormConfig = [
   {
     prop: 'loginFailCount',
     label: '登录失败次数',
-    type: 'text',
+    type: 'number',
   },
   {
     prop: 'loginLockedUnitl',

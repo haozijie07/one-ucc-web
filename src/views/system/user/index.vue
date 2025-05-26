@@ -78,7 +78,7 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'loginFailCount',
     title: '登录失败次数',
-    type: 'text',
+    type: 'number',
   },
   {
     field: 'loginLockedUnitl',

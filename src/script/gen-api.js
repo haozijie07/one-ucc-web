@@ -247,6 +247,18 @@ function generateApi(swagger) {
   return lines.join('\n')
 }
 
+function resolveWidgetType(type) {
+  switch (type) {
+    case 'string':
+      return 'text'
+    case 'integer':
+    case 'number':
+      return 'number'
+    default:
+      return 'text'
+  }
+}
+
 /**
  *
  * @param {Object} schemas 字段数据描述
@@ -279,6 +291,7 @@ function generateTableFormConfig(schemas) {
       const optional = isRequired ? '' : '?'
       // 字段类型
       const type = resolveType(prop)
+      const widgetType = resolveWidgetType(type)
       // 字段描述
       const description = prop.description || ''
 
@@ -289,12 +302,12 @@ function generateTableFormConfig(schemas) {
 
       tableSearch.push(`    field: '${key}',`)
       tableSearch.push(`    title: '${prop.description}',`)
-      tableSearch.push(`    type: 'text',`)
+      tableSearch.push(`    type: '${widgetType}',`)
       tableSearch.push(`  },`)
 
       formConfig.push(`    prop: '${key}',`)
       formConfig.push(`    label: '${prop.description}',`)
-      formConfig.push(`    type: 'text',`)
+      formConfig.push(`    type: '${widgetType}',`)
       formConfig.push(`  },`)
     }
   }
