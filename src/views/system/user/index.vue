@@ -276,19 +276,9 @@ const tableData = ref([
 ])
 async function getDataFn(conditions: any) {
   const res = await UserControllerPageList(conditions)
-  console.log('%c⧭', 'color: #731d6d', res)
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: [
-          {
-            username: 'admin',
-          },
-        ],
-        total: 1,
-      })
-    }, 1000)
-  })
+  if (res) {
+    return res
+  }
 }
 </script>
 
