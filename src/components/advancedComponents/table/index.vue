@@ -10,8 +10,11 @@
       />
     </el-card>
     <el-card class="haozi-table-card">
-      <div class="haozi-table-tool-container">
-        <vxe-toolbar ref="toolbarRef" custom></vxe-toolbar>
+      <div class="haozi-table-header-container">
+        <slot name="table-header-left"></slot>
+        <slot name="table-header-right">
+          <vxe-toolbar ref="toolbarRef" custom></vxe-toolbar>
+        </slot>
       </div>
       <div class="haozi-table-container">
         <vxe-table
@@ -268,6 +271,11 @@ defineExpose({
     flex-grow: 1;
     padding-top: 0;
     overflow: hidden;
+    .haozi-table-header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
   &:deep(.el-card__footer) {
     padding-top: 0;
