@@ -42,7 +42,6 @@ function onClose() {
 }
 
 function onConfirm() {
-  drawerVisible.value = false
   emit('confirm')
 }
 </script>
