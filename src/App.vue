@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import { useChangeColor } from '@/utils/calcColor'
+import { useChangeColor } from '@/utils/calc-color'
 
 const { getLightColor } = useChangeColor()
 for (let i = 1; i <= 9; i++) {
