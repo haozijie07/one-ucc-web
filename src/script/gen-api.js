@@ -301,6 +301,9 @@ function generateTableFormConfig(schemas) {
       formConfig.push(`    prop: '${key}',`)
       formConfig.push(`    label: '${prop.description}',`)
       formConfig.push(`    type: '${widgetType}',`)
+      if (optional === '') {
+        formConfig.push(`    rules: [{ required: true, message: '${prop.description}不能为空' }],`)
+      }
       formConfig.push(`  },`)
     }
   }
