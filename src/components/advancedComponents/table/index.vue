@@ -11,7 +11,9 @@
     </el-card>
     <el-card class="haozi-table-card">
       <div class="haozi-table-header-container">
-        <slot name="table-header-left"></slot>
+        <div>
+          <slot name="table-header-left"></slot>
+        </div>
         <slot name="table-header-right">
           <vxe-toolbar ref="toolbarRef" custom></vxe-toolbar>
         </slot>

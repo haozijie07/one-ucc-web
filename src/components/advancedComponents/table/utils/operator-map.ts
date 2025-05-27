@@ -29,6 +29,13 @@ export const operatorMap: Map<string, { label: string; value: Operator }[]> = ne
     ],
   ],
   [
+    'switch',
+    [
+      { label: '等于', value: 'eq' },
+      { label: '不等于', value: 'ne' },
+    ],
+  ],
+  [
     'multiselect',
     [
       { label: '包含', value: 'in' },

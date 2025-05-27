@@ -46,6 +46,7 @@ declare global {
     | 'datetime'
     | 'daterange'
     | 'datetimerange'
+    | 'switch'
 
   interface ITableSearch {
     field: string

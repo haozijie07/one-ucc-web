@@ -98,6 +98,9 @@
                     />
                   </el-checkbox-group>
                 </template>
+                <template v-else-if="searchItem.type === 'switch'">
+                  <el-switch v-model="searchFormData[`${searchItem.field}_value`]"></el-switch>
+                </template>
                 <template v-else-if="searchItem.type === 'date'">
                   <el-date-picker
                     v-model="searchFormData[`${searchItem.field}_value`]"
