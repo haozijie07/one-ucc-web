@@ -6,13 +6,21 @@
       :get-data-fn="getDataFn"
       v-model:table-data="tableData"
     >
+      <template #table-header-left>
+        <el-button @click="handleAdd" type="primary">新增</el-button>
+      </template>
     </haozi-table>
+    <HaoziDrawer v-model:drawerVisible="addEditDetailDrawerVisible" :header-title="'新增用户'">
+      <haozi-form :form-config="formConfig" v-model="formData"> </haozi-form>
+    </HaoziDrawer>
   </div>
 </template>
 
 <script setup lang="tsx" name="user">
 import { UserControllerPageList } from '@/api/api'
-import { HaoziTable } from '@/components/advancedComponents/index'
+import { HaoziTable, HaoziForm } from '@/components/advancedComponents/index'
+import { HaoziDrawer } from '@/components/baseComponents'
+import { ChinaAreaCascader } from '@/components/businessComponents/index'
 import { ref } from 'vue'
 
 const tableSearch = ref<ITableSearch[]>([
@@ -22,18 +30,8 @@ const tableSearch = ref<ITableSearch[]>([
     type: 'text',
   },
   {
-    field: 'password',
-    title: '密码',
-    type: 'text',
-  },
-  {
     field: 'name',
     title: '姓名',
-    type: 'text',
-  },
-  {
-    field: 'avatar',
-    title: '头像',
     type: 'text',
   },
   {
@@ -69,12 +67,22 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'isEnable',
     title: '是否启用',
-    type: 'text',
+    type: 'radio',
+    options: [
+      {
+        label: '是',
+        value: true,
+      },
+      {
+        label: '否',
+        value: false,
+      },
+    ],
   },
   {
     field: 'lastLoginAt',
     title: '最后登录时间',
-    type: 'text',
+    type: 'datetimerange',
   },
   {
     field: 'loginFailCount',
@@ -84,17 +92,17 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'loginLockedUnitl',
     title: '登录锁定时间',
-    type: 'text',
+    type: 'datetimerange',
   },
   {
     field: 'joinTime',
     title: '入职时间',
-    type: 'text',
+    type: 'datetimerange',
   },
   {
     field: 'leaveTime',
     title: '离职时间',
-    type: 'text',
+    type: 'datetimerange',
   },
   {
     field: 'position',
@@ -109,7 +117,7 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'createdAt',
     title: '创建时间',
-    type: 'text',
+    type: 'datetimerange',
   },
   {
     field: 'createdBy',
@@ -119,7 +127,7 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'updatedAt',
     title: '更新时间',
-    type: 'text',
+    type: 'datetimerange',
   },
   {
     field: 'updatedBy',
@@ -129,7 +137,7 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'deletedAt',
     title: '删除时间',
-    type: 'text',
+    type: 'datetimerange',
   },
   {
     field: 'deletedBy',
@@ -149,11 +157,6 @@ const tableColumn = ref<ITableColumn[]>([
     width: 100,
   },
   {
-    field: 'password',
-    title: '密码',
-    width: 100,
-  },
-  {
     field: 'name',
     title: '姓名',
     width: 100,
@@ -269,16 +272,132 @@ const tableColumn = ref<ITableColumn[]>([
     width: 100,
   },
 ])
-const tableData = ref([
-  {
-    username: 'admin',
-  },
-])
+const tableData = ref([])
 async function getDataFn(conditions: any) {
   const res = await UserControllerPageList(conditions)
   if (res) {
     return res
   }
+}
+
+const addEditDetailDrawerVisible = ref(false)
+const formData = ref<APIUpdateUserDto>({})
+const formConfig = ref<IFormConfig[]>([
+  {
+    prop: 'username',
+    label: '用户名',
+    type: 'text',
+    rules: [{ required: true, message: '用户名不能为空' }],
+  },
+  {
+    prop: 'name',
+    label: '姓名',
+    type: 'text',
+    rules: [{ required: true, message: '姓名不能为空' }],
+  },
+  {
+    prop: 'email',
+    label: '邮箱',
+    type: 'text',
+    rules: [{ required: true, message: '邮箱不能为空' }],
+  },
+  {
+    prop: 'mobile',
+    label: '手机号',
+    type: 'text',
+    rules: [{ required: true, message: '手机号不能为空' }],
+  },
+  {
+    prop: 'sex',
+    label: '性别',
+    type: 'radio',
+    rules: [{ required: true, message: '性别不能为空' }],
+    options: [
+      { label: '男', value: '男' },
+      { label: '女', value: '女' },
+    ],
+  },
+  {
+    prop: 'address',
+    label: '地址',
+    type: 'custom',
+    rules: [{ required: true, message: '地址不能为空' }],
+    render() {
+      return (
+        <ChinaAreaCascader
+          v-model={formData.value.address}
+          placeholder="请选择地址"
+        ></ChinaAreaCascader>
+      )
+    },
+  },
+  {
+    prop: 'nativeAddress',
+    label: '籍贯',
+    type: 'custom',
+    rules: [{ required: true, message: '籍贯不能为空' }],
+    render() {
+      return (
+        <ChinaAreaCascader
+          v-model={formData.value.nativeAddress}
+          placeholder="请选择籍贯"
+        ></ChinaAreaCascader>
+      )
+    },
+  },
+  {
+    prop: 'idCard',
+    label: '身份证号码',
+    type: 'text',
+    rules: [{ required: true, message: '身份证号码不能为空' }],
+  },
+  {
+    prop: 'isEnable',
+    label: '是否启用',
+    type: 'switch',
+    rules: [{ required: true, message: '是否启用不能为空' }],
+    options: [
+      {
+        label: '启用',
+        value: '1',
+      },
+      {
+        label: '禁用',
+        value: '0',
+      },
+    ],
+  },
+  {
+    prop: 'joinTime',
+    label: '入职时间',
+    type: 'datetime',
+    rules: [{ required: true, message: '入职时间不能为空' }],
+  },
+  {
+    prop: 'leaveTime',
+    label: '离职时间',
+    type: 'datetime',
+  },
+  {
+    prop: 'position',
+    label: '职位',
+    type: 'text',
+    rules: [{ required: true, message: '职位不能为空' }],
+  },
+  {
+    prop: 'department',
+    label: '部门',
+    type: 'text',
+    rules: [{ required: true, message: '部门不能为空' }],
+  },
+  {
+    prop: 'remark',
+    label: '备注',
+    type: 'text',
+  },
+])
+function handleAdd() {
+  addEditDetailDrawerVisible.value = true
 }
 </script>
 
