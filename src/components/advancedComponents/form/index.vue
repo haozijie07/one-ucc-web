@@ -190,7 +190,7 @@ const formConfigComputed = computed(() => {
   })
 })
 
-const formData = defineModel<Record<string, any>>({ required: true })
+const formData = defineModel<Record<string, any>>({ default: {}, required: true })
 
 const formRef = ref<FormInstance>()
 
