@@ -1,0 +1,5 @@
+$color-primary: #4caf50;
+
+:root {
+  --vxe-ui-font-primary-color: #{$color-primary}; // 使用插值语法
+}

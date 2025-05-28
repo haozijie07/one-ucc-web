@@ -273,6 +273,7 @@ const tableColumn = ref<ITableColumn[]>([
   },
 ])
 const tableData = ref([])
+
 async function getDataFn(conditions: any) {
   const res = await UserControllerPageList(conditions)
   if (res) {
