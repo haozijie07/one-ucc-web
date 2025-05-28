@@ -160,7 +160,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'username',
     title: '用户名',
-    width: 100,
+    width: 120,
   },
   {
     field: 'name',
@@ -180,7 +180,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'mobile',
     title: '手机号',
-    width: 100,
+    width: 120,
   },
   {
     field: 'sex',
@@ -210,17 +210,17 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'lastLoginAt',
     title: '最后登录时间',
-    width: 100,
+    width: 130,
   },
   {
     field: 'loginFailCount',
     title: '登录失败次数',
-    width: 100,
+    width: 130,
   },
   {
     field: 'loginLockedUnitl',
     title: '登录锁定时间',
-    width: 100,
+    width: 130,
   },
   {
     field: 'joinTime',
@@ -235,7 +235,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'position',
     title: '职位',
-    width: 100,
+    width: 120,
   },
   {
     field: 'department',
@@ -386,16 +386,16 @@ const formConfig = ref<IFormConfig[]>([
     type: 'datetime',
   },
   {
-    prop: 'position',
-    label: '职位',
-    type: 'text',
-    rules: [{ required: true, message: '职位不能为空' }],
-  },
-  {
     prop: 'department',
     label: '部门',
     type: 'text',
     rules: [{ required: true, message: '部门不能为空' }],
+  },
+  {
+    prop: 'position',
+    label: '职位',
+    type: 'text',
+    rules: [{ required: true, message: '职位不能为空' }],
   },
   {
     prop: 'remark',
