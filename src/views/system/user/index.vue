@@ -16,7 +16,7 @@
       :header-title="'新增用户'"
       @confirm="handleConfirm"
     >
-      <haozi-form :form-config="formConfig" v-model="formData"> </haozi-form>
+      <haozi-form ref="formRef" :form-config="formConfig" v-model="formData"> </haozi-form>
     </HaoziDrawer>
   </div>
 </template>
@@ -278,7 +278,7 @@ const tableColumn = ref<ITableColumn[]>([
     width: 100,
   },
 ])
-const tableData = ref([])
+const tableData = ref<APIUpdateUserDto>([])
 
 async function getDataFn(conditions: any) {
   const res = await UserControllerPageList(conditions)
@@ -287,8 +287,11 @@ async function getDataFn(conditions: any) {
   }
 }
 
+const formRef = useTemplateRef('formRef')
 const addEditDetailDrawerVisible = ref(false)
-const formData = ref<APIUpdateUserDto>({})
+const formData = ref<APIUpdateUserDto>({
+  isEnable: true,
+})
 const formConfig = ref<IFormConfig[]>([
   {
     prop: 'username',
@@ -408,12 +411,16 @@ function handleAdd() {
 }
 
 async function handleConfirm() {
-  const res = await UserControllerCreate(formData.value)
-  if (res) {
-    ElMessage.success('添加成功')
-    tableRef.value?.onRefresh?.()
-    addEditDetailDrawerVisible.value = false
-  }
+  formRef.value?.validate().then(async (validate) => {
+    if (validate) {
+      const res = await UserControllerCreate(formData.value)
+      if (res) {
+        ElMessage.success('添加成功')
+        tableRef.value?.onRefresh?.()
+        addEditDetailDrawerVisible.value = false
+      }
+    }
+  })
 }
 </script>
 
