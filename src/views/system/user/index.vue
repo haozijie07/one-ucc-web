@@ -1,6 +1,7 @@
 <template>
   <div>
     <haozi-table
+      ref="tableRef"
       :table-search="tableSearch"
       :table-column="tableColumn"
       :get-data-fn="getDataFn"
@@ -10,19 +11,24 @@
         <el-button @click="handleAdd" type="primary">新增</el-button>
       </template>
     </haozi-table>
-    <HaoziDrawer v-model:drawerVisible="addEditDetailDrawerVisible" :header-title="'新增用户'">
+    <HaoziDrawer
+      v-model:drawerVisible="addEditDetailDrawerVisible"
+      :header-title="'新增用户'"
+      @confirm="handleConfirm"
+    >
       <haozi-form :form-config="formConfig" v-model="formData"> </haozi-form>
     </HaoziDrawer>
   </div>
 </template>
 
 <script setup lang="tsx" name="user">
-import { UserControllerPageList } from '@/api/api'
+import { UserControllerCreate, UserControllerPageList } from '@/api/api'
 import { HaoziTable, HaoziForm } from '@/components/advancedComponents/index'
 import { HaoziDrawer } from '@/components/baseComponents'
-import { ChinaAreaCascader } from '@/components/businessComponents/index'
-import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { ref, useTemplateRef } from 'vue'
 
+const tableRef = useTemplateRef('tableRef')
 const tableSearch = ref<ITableSearch[]>([
   {
     field: 'username',
@@ -321,30 +327,30 @@ const formConfig = ref<IFormConfig[]>([
   {
     prop: 'address',
     label: '地址',
-    type: 'custom',
+    type: 'textarea',
     rules: [{ required: true, message: '地址不能为空' }],
-    render() {
-      return (
-        <ChinaAreaCascader
-          v-model={formData.value.address}
-          placeholder="请选择地址"
-        ></ChinaAreaCascader>
-      )
-    },
+    // render() {
+    //   return (
+    //     <ChinaAreaCascader
+    //       v-model={formData.value.address}
+    //       placeholder="请选择地址"
+    //     ></ChinaAreaCascader>
+    //   )
+    // },
   },
   {
     prop: 'nativeAddress',
     label: '籍贯',
-    type: 'custom',
+    type: 'textarea',
     rules: [{ required: true, message: '籍贯不能为空' }],
-    render() {
-      return (
-        <ChinaAreaCascader
-          v-model={formData.value.nativeAddress}
-          placeholder="请选择籍贯"
-        ></ChinaAreaCascader>
-      )
-    },
+    // render() {
+    //   return (
+    //     <ChinaAreaCascader
+    //       v-model={formData.value.nativeAddress}
+    //       placeholder="请选择籍贯"
+    //     ></ChinaAreaCascader>
+    //   )
+    // },
   },
   {
     prop: 'idCard',
@@ -399,6 +405,15 @@ const formConfig = ref<IFormConfig[]>([
 ])
 function handleAdd() {
   addEditDetailDrawerVisible.value = true
+}
+
+async function handleConfirm() {
+  const res = await UserControllerCreate(formData.value)
+  if (res) {
+    ElMessage.success('添加成功')
+    tableRef.value?.onRefresh?.()
+    addEditDetailDrawerVisible.value = false
+  }
 }
 </script>
 

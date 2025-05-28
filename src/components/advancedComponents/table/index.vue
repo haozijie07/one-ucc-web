@@ -218,6 +218,10 @@ function handleIndexChange() {
 /* ----------------------------------- 工具栏 ---------------------------------- */
 const toolbarRef = ref<VxeToolbarInstance>()
 
+function refresh() {
+  searchFormRef.value?.onSearch()
+}
+
 onMounted(() => {
   const $table = tableRef.value
   const $toolbar = toolbarRef.value
@@ -231,7 +235,7 @@ defineExpose({
   tableRef,
   searchFormRef,
   initSearchFormData: searchFormRef.value?.initSearchFormData,
-  onSearch: searchFormRef.value?.onSearch,
+  onRefresh: refresh,
   onReset: searchFormRef.value?.onReset,
 })
 </script>
