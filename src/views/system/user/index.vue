@@ -10,6 +10,13 @@
       <template #table-header-left>
         <el-button @click="handleAdd" type="primary">新增</el-button>
       </template>
+      <template #action="{ row }">
+        <div style="display: flex; gap: 0 15px">
+          <el-link :underline="false" type="warning">修改</el-link>
+          <el-link :underline="false" type="danger" @click="handleDelete(row)">删除</el-link>
+          <el-link ::underline="false" type="primary">详情</el-link>
+        </div>
+      </template>
     </haozi-table>
     <HaoziDrawer
       v-model:drawerVisible="addEditDetailDrawerVisible"
@@ -23,11 +30,11 @@
 </template>
 
 <script setup lang="tsx" name="user">
-import { UserControllerCreate, UserControllerPageList } from '@/api/api'
+import { UserControllerCreate, UserControllerDelete, UserControllerPageList } from '@/api/api'
 import { HaoziTable, HaoziForm } from '@/components/advancedComponents/index'
 import { HaoziDrawer } from '@/components/baseComponents'
 import { useFormData } from '@/hooks/formData'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref, useTemplateRef } from 'vue'
 
 const tableRef = useTemplateRef('tableRef')
@@ -409,6 +416,8 @@ const formConfig = ref<IFormConfig[]>([
     type: 'text',
   },
 ])
+
+/* ----------------------------------- 添加 ----------------------------------- */
 function handleAdd() {
   addEditDetailDrawerVisible.value = true
 }
@@ -425,6 +434,22 @@ async function handleConfirm() {
       }
     }
   })
+}
+
+/* ----------------------------------- 删除 ----------------------------------- */
+function handleDelete(row: any) {
+  console.log('%c⧭', 'color: #7f7700', row)
+  ElMessageBox.confirm(`您确定要删除用户【${row.name}】吗?`, '提醒', {
+    type: 'warning',
+  })
+    .then(async () => {
+      const res = await UserControllerDelete({ id: row.id })
+      if (res) {
+        ElMessage.success('删除成功')
+        tableRef.value?.onRefresh?.()
+      }
+    })
+    .catch(() => {})
 }
 </script>
 
