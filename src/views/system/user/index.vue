@@ -15,6 +15,7 @@
       v-model:drawerVisible="addEditDetailDrawerVisible"
       :header-title="'新增用户'"
       @confirm="handleConfirm"
+      @close="resetFormData"
     >
       <haozi-form ref="formRef" :form-config="formConfig" v-model="formData"> </haozi-form>
     </HaoziDrawer>
@@ -25,6 +26,7 @@
 import { UserControllerCreate, UserControllerPageList } from '@/api/api'
 import { HaoziTable, HaoziForm } from '@/components/advancedComponents/index'
 import { HaoziDrawer } from '@/components/baseComponents'
+import { useFormData } from '@/hooks/formData'
 import { ElMessage } from 'element-plus'
 import { ref, useTemplateRef } from 'vue'
 
@@ -278,7 +280,7 @@ const tableColumn = ref<ITableColumn[]>([
     width: 100,
   },
 ])
-const tableData = ref<APIUpdateUserDto>([])
+const tableData = ref<APIUpdateUserDto[]>([])
 
 async function getDataFn(conditions: any) {
   const res = await UserControllerPageList(conditions)
@@ -289,9 +291,10 @@ async function getDataFn(conditions: any) {
 
 const formRef = useTemplateRef('formRef')
 const addEditDetailDrawerVisible = ref(false)
-const formData = ref<APIUpdateUserDto>({
+const { formData, resetFormData } = useFormData({
   isEnable: true,
 })
+
 const formConfig = ref<IFormConfig[]>([
   {
     prop: 'username',
@@ -418,6 +421,7 @@ async function handleConfirm() {
         ElMessage.success('添加成功')
         tableRef.value?.onRefresh?.()
         addEditDetailDrawerVisible.value = false
+        resetFormData()
       }
     }
   })

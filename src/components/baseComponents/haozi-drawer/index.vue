@@ -31,6 +31,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'confirm'): void
+  (e: 'close'): void
 }>()
 
 const drawerVisible = defineModel('drawerVisible', {
@@ -39,6 +40,7 @@ const drawerVisible = defineModel('drawerVisible', {
 
 function onClose() {
   drawerVisible.value = false
+  emit('close')
 }
 
 function onConfirm() {
