@@ -13,7 +13,7 @@
     <template #default>
       <slot></slot>
     </template>
-    <template #footer>
+    <template v-if="props.footerVisible" #footer>
       <slot name="footer">
         <div class="el-drawer-footer">
           <el-button @click="onClose">取消</el-button>
@@ -27,6 +27,7 @@
 <script setup lang="tsx">
 const props = defineProps<{
   headerTitle: string
+  footerVisible?: boolean
 }>()
 
 const emit = defineEmits<{

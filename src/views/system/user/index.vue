@@ -8,13 +8,17 @@
       v-model:table-data="tableData"
     >
       <template #table-header-left>
-        <el-button @click="handleAdd" type="primary">新增</el-button>
+        <el-button @click="handleCru('新增用户')" type="primary">新增</el-button>
       </template>
       <template #action="{ row }">
         <div style="display: flex; gap: 0 15px">
-          <el-link :underline="false" type="warning">修改</el-link>
+          <el-link :underline="false" type="warning" @click="handleCru('修改用户', row, true)"
+            >修改</el-link
+          >
           <el-link :underline="false" type="danger" @click="handleDelete(row)">删除</el-link>
-          <el-link ::underline="false" type="primary">详情</el-link>
+          <el-link ::underline="false" type="primary" @click="handleCru('用户详情', row, false)"
+            >详情</el-link
+          >
         </div>
       </template>
     </haozi-table>
@@ -290,13 +294,12 @@ async function getDataFn(conditions: any) {
 
 const cruDrawerRef = useTemplateRef('cruDrawerRef')
 /* ----------------------------------- 添加 ----------------------------------- */
-function handleAdd() {
-  cruDrawerRef.value?.openDrawer()
+function handleCru(title: string, row?: any, isUpdate?: boolean) {
+  cruDrawerRef.value?.openDrawer(title, row, isUpdate)
 }
 
 /* ----------------------------------- 删除 ----------------------------------- */
 function handleDelete(row: any) {
-  console.log('%c⧭', 'color: #7f7700', row)
   ElMessageBox.confirm(`您确定要删除用户【${row.name}】吗?`, '提醒', {
     type: 'warning',
   })

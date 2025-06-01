@@ -1,11 +1,18 @@
 <template>
   <HaoziDrawer
     v-model:drawerVisible="drawerVisible"
-    :header-title="'新增用户'"
+    :header-title="headerTitle"
     @confirm="handleConfirm"
     @close="resetFormData"
+    :footerVisible="!disabled"
   >
-    <haozi-form ref="formRef" :form-config="formConfig" v-model="formData"> </haozi-form>
+    <haozi-form
+      :form-props="{ disabled }"
+      ref="formRef"
+      :form-config="formConfig"
+      v-model="formData"
+    >
+    </haozi-form>
   </HaoziDrawer>
 </template>
 
@@ -15,7 +22,9 @@ import { HaoziForm } from '@/components/advancedComponents/index'
 import { useFormData } from '@/hooks/formData'
 import { ref, useTemplateRef } from 'vue'
 import { ElMessage } from 'element-plus'
-import { UserControllerCreate } from '@/api/api'
+import { UserControllerCreate, UserControllerUpdate } from '@/api/api'
+import { deepClone } from '@/utils/common-fn'
+import { isDefined, isFalse } from '@/utils/is'
 
 const formRef = useTemplateRef('formRef')
 const drawerVisible = ref(false)
@@ -145,18 +154,34 @@ const formConfig = ref<IFormConfig[]>([
 async function handleConfirm() {
   formRef.value?.validate().then(async (validate) => {
     if (validate) {
-      const res = await UserControllerCreate(formData.value)
-      if (res) {
-        ElMessage.success('添加成功')
-        drawerVisible.value = false
-        resetFormData()
-        emits('refresh')
+      if (formData.value.id) {
+        const res = await UserControllerUpdate({ id: formData.value.id }, formData.value)
+        if (res) {
+          ElMessage.success('修改成功')
+          drawerVisible.value = false
+          resetFormData()
+          emits('refresh')
+        }
+      } else {
+        const res = await UserControllerCreate(formData.value)
+        if (res) {
+          ElMessage.success('添加成功')
+          drawerVisible.value = false
+          resetFormData()
+          emits('refresh')
+        }
       }
     }
   })
 }
 
-async function openDrawer() {
+const headerTitle = ref('添加用户')
+const disabled = ref(false)
+async function openDrawer(title: string, row?: any, isUpdate?: boolean) {
+  if (row) formData.value = deepClone(row)
+  disabled.value = isFalse(isUpdate) ? true : false
+
+  headerTitle.value = title
   drawerVisible.value = true
 }
 
