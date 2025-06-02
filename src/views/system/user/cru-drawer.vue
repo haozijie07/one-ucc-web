@@ -184,6 +184,7 @@ const formConfig = ref<IFormConfig[]>([
     prop: 'position',
     label: '职位',
     type: 'text',
+    rules: [{ required: true, message: '入职时间不能为空' }],
   },
   {
     prop: 'remark',
