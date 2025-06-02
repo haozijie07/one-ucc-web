@@ -53,7 +53,22 @@ const formConfig = ref<IFormConfig[]>([
     prop: 'email',
     label: '邮箱',
     type: 'text',
-    rules: [{ required: true, message: '邮箱不能为空' }],
+    rules: [
+      { required: true, message: '邮箱不能为空' },
+      {
+        validator: (rule, value, callback) => {
+          if (!value) {
+            callback()
+          } else {
+            if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value)) {
+              callback('邮箱格式不正确')
+            } else {
+              callback()
+            }
+          }
+        },
+      },
+    ],
   },
   {
     prop: 'mobile',
