@@ -1,5 +1,100 @@
 // Auto-generated from swagger
 
+const CreateDepartmentDtoFormConfig = [
+  {
+    prop: 'name',
+    label: '部门名称',
+    type: 'text',
+    rules: [{ required: true, message: '部门名称不能为空' }],
+  },
+  {
+    prop: 'code',
+    label: '部门编码',
+    type: 'text',
+  },
+  {
+    prop: 'parentId',
+    label: '上级部门 ID（用于树结构）',
+    type: 'text',
+  },
+  {
+    prop: 'parent',
+    label: '',
+    type: 'text',
+  },
+  {
+    prop: 'leader',
+    label: '部门负责人名称',
+    type: 'text',
+  },
+  {
+    prop: 'leaderId',
+    label: '部门负责人用户 ID（可选）',
+    type: 'text',
+  },
+  {
+    prop: 'sort',
+    label: '排序',
+    type: 'number',
+    rules: [{ required: true, message: '排序不能为空' }],
+  },
+  {
+    prop: 'isEnable',
+    label: '是否启用',
+    type: 'text',
+    rules: [{ required: true, message: '是否启用不能为空' }],
+  },
+  {
+    prop: 'createdAt',
+    label: '创建时间',
+    type: 'text',
+  },
+  {
+    prop: 'createdBy',
+    label: '',
+    type: 'text',
+    rules: [{ required: true, message: '不能为空' }],
+  },
+  {
+    prop: 'createdId',
+    label: '',
+    type: 'text',
+  },
+  {
+    prop: 'updatedAt',
+    label: '更新时间',
+    type: 'text',
+  },
+  {
+    prop: 'updatedBy',
+    label: '',
+    type: 'text',
+  },
+  {
+    prop: 'updatedId',
+    label: '',
+    type: 'text',
+  },
+  {
+    prop: 'deletedAt',
+    label: '删除时间',
+    type: 'text',
+  },
+  {
+    prop: 'deletedBy',
+    label: '',
+    type: 'text',
+  },
+  {
+    prop: 'deletedId',
+    label: '',
+    type: 'text',
+  },
+  {
+    prop: 'remark',
+    label: '备注',
+    type: 'text',
+  },
 const CreateUserDtoFormConfig = [
   {
     prop: 'username',
@@ -75,7 +170,6 @@ const CreateUserDtoFormConfig = [
     prop: 'loginFailCount',
     label: '登录失败次数',
     type: 'number',
-    rules: [{ required: true, message: '登录失败次数不能为空' }],
   },
   {
     prop: 'loginLockedUnitl',
@@ -94,16 +188,26 @@ const CreateUserDtoFormConfig = [
     type: 'text',
   },
   {
+    prop: 'department',
+    label: '部门',
+    type: 'text',
+    rules: [{ required: true, message: '部门不能为空' }],
+  },
+  {
+    prop: 'departmentId',
+    label: '部门ID',
+    type: 'text',
+  },
+  {
     prop: 'position',
     label: '职位',
     type: 'text',
     rules: [{ required: true, message: '职位不能为空' }],
   },
   {
-    prop: 'department',
-    label: '部门',
+    prop: 'positionId',
+    label: '职位ID',
     type: 'text',
-    rules: [{ required: true, message: '部门不能为空' }],
   },
   {
     prop: 'createdAt',
@@ -117,6 +221,11 @@ const CreateUserDtoFormConfig = [
     rules: [{ required: true, message: '创建人不能为空' }],
   },
   {
+    prop: 'createdId',
+    label: '创建人ID',
+    type: 'text',
+  },
+  {
     prop: 'updatedAt',
     label: '更新时间',
     type: 'text',
@@ -127,6 +236,11 @@ const CreateUserDtoFormConfig = [
     type: 'text',
   },
   {
+    prop: 'updatedId',
+    label: '更新人ID',
+    type: 'text',
+  },
+  {
     prop: 'deletedAt',
     label: '删除时间',
     type: 'text',
@@ -134,6 +248,11 @@ const CreateUserDtoFormConfig = [
   {
     prop: 'deletedBy',
     label: '删除人',
+    type: 'text',
+  },
+  {
+    prop: 'deletedId',
+    label: '删除人ID',
     type: 'text',
   },
   {
