@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { AxiosRequestConfig } from 'axios'
 import { getPending, addPending, removePending, hasPending } from './requestQueue'
+import { ElMessageBox } from 'element-plus'
 
 export function createAxiosInstance(config: AxiosRequestConfig): RequestInstance {
   const instance = axios.create(config)
@@ -70,12 +71,18 @@ export function createAxiosInstance(config: AxiosRequestConfig): RequestInstance
           if (config.dedupe) {
             config.__internalHandlers?.resolve?.(data)
           }
+
           removePending(config)
           return data
         } else {
           if (config.dedupe) {
             config.__internalHandlers?.resolve?.(null)
           }
+          ElMessageBox({
+            title: '请求异常',
+            type: 'error',
+            message,
+          })
           removePending(config)
           // 自定义错误处理
           return null

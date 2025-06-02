@@ -24,7 +24,7 @@ import { ref, useTemplateRef } from 'vue'
 import { ElMessage } from 'element-plus'
 import { UserControllerCreate, UserControllerUpdate } from '@/api/api'
 import { deepClone } from '@/utils/common-fn'
-import { isDefined, isFalse } from '@/utils/is'
+import { isFalse, isIdCard } from '@/utils/is'
 
 const formRef = useTemplateRef('formRef')
 const drawerVisible = ref(false)
@@ -59,7 +59,22 @@ const formConfig = ref<IFormConfig[]>([
     prop: 'mobile',
     label: '手机号',
     type: 'text',
-    rules: [{ required: true, message: '手机号不能为空' }],
+    rules: [
+      { required: true, message: '手机号不能为空' },
+      {
+        validator: (rule, value, callback) => {
+          if (value) {
+            if (!/^1[3-9]\d{9}$/.test(value)) {
+              callback(new Error('手机号格式不正确'))
+            } else {
+              callback()
+            }
+          } else {
+            callback()
+          }
+        },
+      },
+    ],
   },
   {
     prop: 'sex',
@@ -103,7 +118,20 @@ const formConfig = ref<IFormConfig[]>([
     prop: 'idCard',
     label: '身份证号码',
     type: 'text',
-    rules: [{ required: true, message: '身份证号码不能为空' }],
+    rules: [
+      { required: true, message: '身份证号码不能为空' },
+      {
+        validator: (rule, value, callback) => {
+          if (value) {
+            if (!isIdCard(value)) {
+              callback(new Error('请输入正确的身份证号码'))
+            } else {
+              callback()
+            }
+          }
+        },
+      },
+    ],
   },
   {
     prop: 'isEnable',
@@ -136,13 +164,11 @@ const formConfig = ref<IFormConfig[]>([
     prop: 'department',
     label: '部门',
     type: 'text',
-    rules: [{ required: true, message: '部门不能为空' }],
   },
   {
     prop: 'position',
     label: '职位',
     type: 'text',
-    rules: [{ required: true, message: '职位不能为空' }],
   },
   {
     prop: 'remark',
@@ -152,7 +178,10 @@ const formConfig = ref<IFormConfig[]>([
 ])
 
 async function handleConfirm() {
+  console.log(formRef.value?.validate())
+
   formRef.value?.validate().then(async (validate) => {
+    console.log('%c⧭', 'color: #73998c', validate)
     if (validate) {
       if (formData.value.id) {
         const res = await UserControllerUpdate({ id: formData.value.id }, formData.value)
