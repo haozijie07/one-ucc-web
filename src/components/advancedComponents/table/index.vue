@@ -81,6 +81,7 @@
 import { ref, onMounted, useTemplateRef, computed } from 'vue'
 import SearchForm from './SearchForm/index.vue'
 import type { VxeTablePropTypes, VxeTableProps, VxeToolbarInstance } from 'vxe-table'
+import { isEmpty } from '@/utils/is'
 
 const props = withDefaults(
   defineProps<{
@@ -120,7 +121,7 @@ async function onSearch() {
   for (const index in props.tableSearch) {
     const search = props.tableSearch[+index]
 
-    if (!!searchFormData.value[`${search.field}_value`]) {
+    if (!isEmpty(searchFormData.value[`${search.field}_value`])) {
       conditions.push({
         field: searchFormData.value[`${search.field}_field`],
         operator: searchFormData.value[`${search.field}_operator`],

@@ -3,7 +3,7 @@
  * @param value 要判断的值
  * @returns {boolean} 判断结果
  */
-export function isDefined(value: any): boolean {
+export function isUnDefined(value: any): boolean {
   return value !== undefined
 }
 
@@ -14,6 +14,15 @@ export function isDefined(value: any): boolean {
  */
 export function isFalse(value: any): boolean {
   return value === false
+}
+
+/**
+ * 判断一个值是为空值
+ * @param value 要判断的值
+ * @returns {boolean} 判断结果
+ */
+export function isEmpty(value: any): boolean {
+  return value === '' || value === null || value === undefined || value.length === 0
 }
 
 /**
