@@ -28,6 +28,11 @@ const router = createRouter({
           name: 'dict',
           component: () => import('@/views/system/dict/index.vue'),
         },
+        {
+          path: '/system/department',
+          name: 'department',
+          component: () => import('@/views/system/department/index.vue'),
+        },
       ],
     },
     {

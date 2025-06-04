@@ -50,7 +50,7 @@ function resolveType(prop) {
   // 引用类型
   if (prop.$ref) {
     const dto = prop.$ref.split('/').pop()
-    return `Types.API${dto}`
+    return `API${dto}`
   }
 
   // 数组类型
@@ -72,20 +72,20 @@ function resolveType(prop) {
       // 1. data 是数组：如 ListResult<T>
       if (data.type === 'array' && data.items?.$ref) {
         const dto = data.items.$ref.split('/').pop()
-        return `Types.API${dto}[]`
+        return `API${dto}[]`
       }
 
       // 2. data 是分页嵌套对象：如 PageResult<{ data: T[] }>
       if (data.type === 'object' && data.properties?.data?.items?.$ref) {
         const deepData = data.properties.data
         const dto = deepData.items.$ref.split('/').pop()
-        return `IPageListData<Types.API${dto}>`
+        return `IPageListData<API${dto}>`
       }
 
       // 3. data 是引用
       if (data.$ref) {
         const dto = data.$ref.split('/').pop()
-        return `Types.API${dto}`
+        return `API${dto}`
       }
     }
   }
@@ -306,11 +306,10 @@ function generateTableFormConfig(schemas) {
       }
       formConfig.push(`  },`)
     }
+    tableSearch.push(']\n')
+    tableColumn.push(']\n')
+    formConfig.push(']\n')
   }
-
-  tableSearch.push(']\n')
-  tableColumn.push(']\n')
-  formConfig.push(']\n')
 
   return {
     tableColumn: tableColumn.join('\n'),

@@ -1,5 +1,98 @@
 // Auto-generated from swagger
 
+const CreateDepartmentDtoTableColumn = [
+  {
+    field: 'name',
+    title: '部门名称',
+    width: 100,
+  },
+  {
+    field: 'code',
+    title: '部门编码',
+    width: 100,
+  },
+  {
+    field: 'parentId',
+    title: '上级部门 ID（用于树结构）',
+    width: 100,
+  },
+  {
+    field: 'parent',
+    title: '',
+    width: 100,
+  },
+  {
+    field: 'leader',
+    title: '部门负责人名称',
+    width: 100,
+  },
+  {
+    field: 'leaderId',
+    title: '部门负责人用户 ID（可选）',
+    width: 100,
+  },
+  {
+    field: 'sort',
+    title: '排序',
+    width: 100,
+  },
+  {
+    field: 'isEnable',
+    title: '是否启用',
+    width: 100,
+  },
+  {
+    field: 'createdAt',
+    title: '创建时间',
+    width: 100,
+  },
+  {
+    field: 'createdBy',
+    title: '创建人',
+    width: 100,
+  },
+  {
+    field: 'createdId',
+    title: '创建人ID',
+    width: 100,
+  },
+  {
+    field: 'updatedAt',
+    title: '更新时间',
+    width: 100,
+  },
+  {
+    field: 'updatedBy',
+    title: '更新人',
+    width: 100,
+  },
+  {
+    field: 'updatedId',
+    title: '更新人ID',
+    width: 100,
+  },
+  {
+    field: 'deletedAt',
+    title: '删除时间',
+    width: 100,
+  },
+  {
+    field: 'deletedBy',
+    title: '删除人',
+    width: 100,
+  },
+  {
+    field: 'deletedId',
+    title: '删除人ID',
+    width: 100,
+  },
+  {
+    field: 'remark',
+    title: '备注',
+    width: 100,
+  },
+]
+
 const CreateUserDtoTableColumn = [
   {
     field: 'username',
@@ -82,13 +175,23 @@ const CreateUserDtoTableColumn = [
     width: 100,
   },
   {
+    field: 'department',
+    title: '部门',
+    width: 100,
+  },
+  {
+    field: 'departmentId',
+    title: '部门ID',
+    width: 100,
+  },
+  {
     field: 'position',
     title: '职位',
     width: 100,
   },
   {
-    field: 'department',
-    title: '部门',
+    field: 'positionId',
+    title: '职位ID',
     width: 100,
   },
   {
@@ -102,6 +205,11 @@ const CreateUserDtoTableColumn = [
     width: 100,
   },
   {
+    field: 'createdId',
+    title: '创建人ID',
+    width: 100,
+  },
+  {
     field: 'updatedAt',
     title: '更新时间',
     width: 100,
@@ -112,6 +220,11 @@ const CreateUserDtoTableColumn = [
     width: 100,
   },
   {
+    field: 'updatedId',
+    title: '更新人ID',
+    width: 100,
+  },
+  {
     field: 'deletedAt',
     title: '删除时间',
     width: 100,
@@ -119,6 +232,11 @@ const CreateUserDtoTableColumn = [
   {
     field: 'deletedBy',
     title: '删除人',
+    width: 100,
+  },
+  {
+    field: 'deletedId',
+    title: '删除人ID',
     width: 100,
   },
   {
