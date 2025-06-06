@@ -126,6 +126,101 @@ const tableSearch = ref<ITableSearch[]>([
     type: 'text',
   },
   {
+    field: 'education',
+    title: '学历',
+    type: 'select',
+    options: [
+      { label: '初中', value: '初中' },
+      { label: '高中', value: '高中' },
+      { label: '大专', value: '大专' },
+      { label: '本科', value: '本科' },
+      { label: '硕士', value: '硕士' },
+      { label: '博士', value: '博士' },
+    ],
+  },
+  {
+    field: 'graduateSchool',
+    title: '毕业院校',
+    type: 'text',
+  },
+  {
+    field: 'emergencyContacts',
+    title: '紧急联系人',
+    type: 'text',
+  },
+  {
+    field: 'emergencyContactPhone',
+    title: '紧急联系人电话',
+    type: 'text',
+  },
+  {
+    field: 'idPhoto',
+    title: '身份证照片',
+    type: 'text',
+  },
+  {
+    field: 'bankCard',
+    title: '银行卡账号',
+    type: 'text',
+  },
+  {
+    field: 'bankCardPhoto',
+    title: '银行卡照片',
+    type: 'text',
+  },
+  {
+    field: 'resume',
+    title: '简历',
+    type: 'text',
+  },
+  {
+    field: 'politicalStatus',
+    title: '政治面貌',
+    type: 'radio',
+    options: [
+      {
+        label: '党员',
+        value: '党员',
+      },
+      {
+        label: '团员',
+        value: '团员',
+      },
+      {
+        label: '群众',
+        value: '群众',
+      },
+    ],
+  },
+  {
+    field: 'status',
+    title: '在职状态',
+    type: 'select',
+    options: [
+      {
+        label: '实习',
+        value: '实习',
+      },
+      {
+        label: '试用期',
+        value: '试用期',
+      },
+      {
+        label: '在职',
+        value: '在职',
+      },
+      {
+        label: '离职',
+        value: '离职',
+      },
+    ],
+  },
+  {
+    field: 'birthday',
+    title: '生日',
+    type: 'date',
+  },
+  {
     field: 'createdAt',
     title: '创建时间',
     type: 'datetimerange',
@@ -245,6 +340,61 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'department',
     title: '部门',
+    width: 100,
+  },
+  {
+    field: 'education',
+    title: '学历',
+    width: 100,
+  },
+  {
+    field: 'graduateSchool',
+    title: '毕业院校',
+    width: 100,
+  },
+  {
+    field: 'emergencyContacts',
+    title: '紧急联系人',
+    width: 100,
+  },
+  {
+    field: 'emergencyContactPhone',
+    title: '紧急联系人电话',
+    width: 100,
+  },
+  {
+    field: 'idPhoto',
+    title: '身份证照片',
+    width: 100,
+  },
+  {
+    field: 'bankCard',
+    title: '银行卡账号',
+    width: 100,
+  },
+  {
+    field: 'bankCardPhoto',
+    title: '银行卡照片',
+    width: 100,
+  },
+  {
+    field: 'resume',
+    title: '简历',
+    width: 100,
+  },
+  {
+    field: 'politicalStatus',
+    title: '政治面貌',
+    width: 100,
+  },
+  {
+    field: 'status',
+    title: '在职状态',
+    width: 100,
+  },
+  {
+    field: 'birthday',
+    title: '生日',
     width: 100,
   },
   {

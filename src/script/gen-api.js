@@ -247,6 +247,8 @@ function resolveWidgetType(type) {
     case 'integer':
     case 'number':
       return 'number'
+    case 'date':
+      return 'datetimerange'
     default:
       return 'text'
   }

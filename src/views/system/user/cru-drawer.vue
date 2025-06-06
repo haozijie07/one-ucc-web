@@ -187,6 +187,122 @@ const formConfig = ref<IFormConfig[]>([
     rules: [{ required: true, message: '入职时间不能为空' }],
   },
   {
+    prop: 'education',
+    label: '学历',
+    type: 'select',
+    options: [
+      { label: '初中', value: '初中' },
+      { label: '高中', value: '高中' },
+      { label: '大专', value: '大专' },
+      { label: '本科', value: '本科' },
+      { label: '硕士', value: '硕士' },
+      { label: '博士', value: '博士' },
+    ],
+    rules: [{ required: true, message: '学历不能为空' }],
+  },
+  {
+    prop: 'graduateSchool',
+    label: '毕业院校',
+    type: 'text',
+    rules: [{ required: true, message: '毕业院校不能为空' }],
+  },
+  {
+    prop: 'emergencyContacts',
+    label: '紧急联系人',
+    type: 'text',
+    rules: [{ required: true, message: '紧急联系人不能为空' }],
+  },
+  {
+    prop: 'emergencyContactPhone',
+    label: '紧急联系人电话',
+    type: 'text',
+    rules: [
+      { required: true, message: '紧急联系人电话不能为空' },
+      {
+        validator: (rule, value, callback) => {
+          if (value) {
+            if (!/^1[3-9]\d{9}$/.test(value)) {
+              callback(new Error('手机号格式不正确'))
+            } else {
+              callback()
+            }
+          } else {
+            callback()
+          }
+        },
+      },
+    ],
+  },
+  {
+    prop: 'idPhoto',
+    label: '身份证照片',
+    type: 'text',
+  },
+  {
+    prop: 'bankCard',
+    label: '银行卡账号',
+    type: 'text',
+  },
+  {
+    prop: 'bankCardPhoto',
+    label: '银行卡照片',
+    type: 'text',
+  },
+  {
+    prop: 'resume',
+    label: '简历',
+    type: 'text',
+  },
+  {
+    prop: 'politicalStatus',
+    label: '政治面貌',
+    type: 'radio',
+    options: [
+      {
+        label: '党员',
+        value: '党员',
+      },
+      {
+        label: '团员',
+        value: '团员',
+      },
+      {
+        label: '群众',
+        value: '群众',
+      },
+    ],
+    rules: [{ required: true, message: '政治面貌不能为空' }],
+  },
+  {
+    prop: 'status',
+    label: '在职状态',
+    type: 'select',
+    options: [
+      {
+        label: '实习',
+        value: '实习',
+      },
+      {
+        label: '试用期',
+        value: '试用期',
+      },
+      {
+        label: '在职',
+        value: '在职',
+      },
+      {
+        label: '离职',
+        value: '离职',
+      },
+    ],
+  },
+  {
+    prop: 'birthday',
+    label: '生日',
+    type: 'date',
+    rules: [{ required: true, message: '生日不能为空' }],
+  },
+  {
     prop: 'remark',
     label: '备注',
     type: 'text',
