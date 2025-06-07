@@ -7,9 +7,6 @@ import url from 'url'
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const swaggerSource = 'http://localhost:3000/api-json'
-const outputDir = path.resolve(__dirname, '../api')
-
 /**
  *
  * @param {string} swaggerUrl swagger json url
@@ -321,88 +318,112 @@ function generateTableFormConfig(schemas) {
 }
 
 // ---------- MAIN ----------
-fetchSwaggerJson(swaggerSource, (err, swagger) => {
-  if (err) {
-    console.error('❌ 读取 swagger 失败：', err.message)
+function run(modelArg) {
+  if (!modelArg) {
+    console.warn('请指定要生成的模块名')
     return
   }
-
-  // 创建输出文件夹
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
-
-  // 生成各字段对应的ts类型和类型接口
-  const typesCode = generateTypes(swagger.components?.schemas || {})
-
-  // 生成各请求对应的请求函数
-  const apiCode = generateApi(swagger)
-
-  // 生成表格配置、表单配置
-  const { tableColumn, tableSearch, formConfig } = generateTableFormConfig(
-    swagger.components?.schemas || {},
-  )
-
-  // 文件写入
-  // 类型
-  let typeFileName
-  const typeFile = path.join(outputDir, 'types.d.ts')
-  if (fs.existsSync(typeFile)) {
-    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-    fs.writeFileSync(path.join(outputDir, './back/types.d.ts'), typesCode, 'utf-8')
-    typeFileName = 'api/back/types.d.ts'
-  } else {
-    fs.writeFileSync(path.join(outputDir, 'types.d.ts'), typesCode, 'utf-8')
-    typeFileName = 'types.d.ts'
+  if (!swaggerJson[modelArg]) {
+    console.warn('请指定正确的模块名')
+    return
   }
+  swaggerSource = swaggerJson[modelArg].url
+  swaggerGroupName = swaggerJson[modelArg].name
+  outputDir = path.resolve(__dirname, `../api/${swaggerGroupName}`)
+  fetchSwaggerJson(swaggerSource, (err, swagger) => {
+    if (err) {
+      console.error('❌ 读取 swagger 失败：', err.message)
+      return
+    }
 
-  // api
-  let apiFileName
-  const apiFile = path.join(outputDir, 'api.ts')
-  if (fs.existsSync(apiFile)) {
-    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-    fs.writeFileSync(path.join(outputDir, './back/api.ts'), apiCode, 'utf-8')
-    apiFileName = 'api/back/api.ts'
-  } else {
-    fs.writeFileSync(path.join(outputDir, 'api.ts'), apiCode, 'utf-8')
-    apiFileName = 'api/api.ts'
-  }
+    // 创建输出文件夹
+    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
 
-  // tableColumn
-  let tableConfigFileName
-  const tableConfigFile = path.join(outputDir, 'tableColumn.ts')
-  if (fs.existsSync(tableConfigFile)) {
-    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-    fs.writeFileSync(path.join(outputDir, './back/tableColumn.ts'), tableColumn, 'utf-8')
-    tableConfigFileName = 'api/back/tableColumn.ts'
-  } else {
-    fs.writeFileSync(path.join(outputDir, 'tableColumn.ts'), tableColumn, 'utf-8')
-    tableConfigFileName = 'api/tableColumn.ts'
-  }
+    // 生成各字段对应的ts类型和类型接口
+    const typesCode = generateTypes(swagger.components?.schemas || {})
 
-  // tableSearch
-  let tableSearchFileName
-  const tableSearchFile = path.join(outputDir, 'tableSearch.ts')
-  if (fs.existsSync(tableSearchFile)) {
-    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-    fs.writeFileSync(path.join(outputDir, './back/tableSearch.ts'), tableSearch, 'utf-8')
-    tableSearchFileName = 'api/back/tableSearch.ts'
-  } else {
-    fs.writeFileSync(path.join(outputDir, 'tableSearch.ts'), tableSearch, 'utf-8')
-    tableSearchFileName = 'api/tableSearch.ts'
-  }
+    // 生成各请求对应的请求函数
+    const apiCode = generateApi(swagger)
 
-  // formConfig
-  let formConfigFileName
-  const formConfigFile = path.join(outputDir, 'formConfig.ts')
-  if (fs.existsSync(formConfigFile)) {
-    fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-    fs.writeFileSync(path.join(outputDir, './back/formConfig.ts'), formConfig, 'utf-8')
-    formConfigFileName = 'api/back/formConfig.ts'
-  } else {
-    fs.writeFileSync(path.join(outputDir, 'formConfig.ts'), formConfig, 'utf-8')
-    formConfigFileName = 'api/formConfig.ts'
-  }
+    // 生成表格配置、表单配置
+    const { tableColumn, tableSearch, formConfig } = generateTableFormConfig(
+      swagger.components?.schemas || {},
+    )
 
-  console.log(
-    `✅ 已生成：${typeFileName} 与 ${apiFileName} 与 ${tableConfigFileName} 与 ${tableSearchFileName} 与 ${formConfigFileName}`,
-  )
-})
+    // 文件写入
+    // 类型
+    let typeFileName
+    const typeFile = path.join(outputDir, 'types.d.ts')
+    if (fs.existsSync(typeFile)) {
+      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+      fs.writeFileSync(path.join(outputDir, './back/types.d.ts'), typesCode, 'utf-8')
+      typeFileName = 'api/back/types.d.ts'
+    } else {
+      fs.writeFileSync(path.join(outputDir, 'types.d.ts'), typesCode, 'utf-8')
+      typeFileName = 'types.d.ts'
+    }
+
+    // api
+    let apiFileName
+    const apiFile = path.join(outputDir, 'api.ts')
+    if (fs.existsSync(apiFile)) {
+      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+      fs.writeFileSync(path.join(outputDir, './back/api.ts'), apiCode, 'utf-8')
+      apiFileName = 'api/back/api.ts'
+    } else {
+      fs.writeFileSync(path.join(outputDir, 'api.ts'), apiCode, 'utf-8')
+      apiFileName = 'api/api.ts'
+    }
+
+    // tableColumn
+    let tableConfigFileName
+    const tableConfigFile = path.join(outputDir, 'tableColumn.ts')
+    if (fs.existsSync(tableConfigFile)) {
+      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+      fs.writeFileSync(path.join(outputDir, './back/tableColumn.ts'), tableColumn, 'utf-8')
+      tableConfigFileName = 'api/back/tableColumn.ts'
+    } else {
+      fs.writeFileSync(path.join(outputDir, 'tableColumn.ts'), tableColumn, 'utf-8')
+      tableConfigFileName = 'api/tableColumn.ts'
+    }
+
+    // tableSearch
+    let tableSearchFileName
+    const tableSearchFile = path.join(outputDir, 'tableSearch.ts')
+    if (fs.existsSync(tableSearchFile)) {
+      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+      fs.writeFileSync(path.join(outputDir, './back/tableSearch.ts'), tableSearch, 'utf-8')
+      tableSearchFileName = 'api/back/tableSearch.ts'
+    } else {
+      fs.writeFileSync(path.join(outputDir, 'tableSearch.ts'), tableSearch, 'utf-8')
+      tableSearchFileName = 'api/tableSearch.ts'
+    }
+
+    // formConfig
+    let formConfigFileName
+    const formConfigFile = path.join(outputDir, 'formConfig.ts')
+    if (fs.existsSync(formConfigFile)) {
+      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
+      fs.writeFileSync(path.join(outputDir, './back/formConfig.ts'), formConfig, 'utf-8')
+      formConfigFileName = 'api/back/formConfig.ts'
+    } else {
+      fs.writeFileSync(path.join(outputDir, 'formConfig.ts'), formConfig, 'utf-8')
+      formConfigFileName = 'api/formConfig.ts'
+    }
+
+    console.log(
+      `✅ 已生成：${typeFileName} 与 ${apiFileName} 与 ${tableConfigFileName} 与 ${tableSearchFileName} 与 ${formConfigFileName}`,
+    )
+  })
+}
+
+const swaggerJson = {
+  common: { name: 'common', url: 'http://localhost:3000/api/docs/common-json' },
+  system: { name: 'system', url: 'http://localhost:3000/api/docs/system-json' },
+}
+
+let swaggerSource, swaggerGroupName, outputDir
+
+// CLI 参数支持：node gen-api [groupName]
+const modelArg = process.argv[2]
+run(modelArg)

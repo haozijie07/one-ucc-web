@@ -22,7 +22,7 @@ import { HaoziForm } from '@/components/advancedComponents/index'
 import { useFormData } from '@/hooks/formData'
 import { ref, useTemplateRef } from 'vue'
 import { ElMessage } from 'element-plus'
-import { UserControllerCreate, UserControllerUpdate } from '@/api/api'
+import { UserControllerCreate, UserControllerUpdate } from '@/api/system/api'
 import { deepClone } from '@/utils/common-fn'
 import { isFalse, isIdCard } from '@/utils/is'
 

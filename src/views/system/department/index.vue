@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="tsx" name="user">
-import { DepartmentControllerDelete, DepartmentControllerPageList } from '@/api/api'
+import { DepartmentControllerDelete, DepartmentControllerPageList } from '@/api/system/api'
 import { HaoziTable } from '@/components/advancedComponents/index'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref, useTemplateRef } from 'vue'
