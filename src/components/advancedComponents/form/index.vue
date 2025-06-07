@@ -7,7 +7,7 @@
     v-bind="props.formProps"
     :model="formData"
   >
-    <template v-for="item in formConfigComputed" :key="item.prop">
+    <template v-for="item in processFormConfig" :key="item.prop">
       <el-form-item
         :label="item.label + ':'"
         :prop="item.prop"
@@ -167,9 +167,9 @@ const props = defineProps<{
 import { ref, watch } from 'vue'
 import { getSimpleOptionsList } from '@/utils/common-fn'
 
-const formConfigComputed = ref<IFormConfig[]>([])
+const processFormConfig = ref<IFormConfig[]>([])
 
-async function processFormConfig(formConfig: IFormConfig[]) {
+async function initFormConfig(formConfig: IFormConfig[]) {
   const placeholderMap: Record<widgetType, string> = {
     text: '请输入',
     textarea: '请输入',
@@ -192,7 +192,9 @@ async function processFormConfig(formConfig: IFormConfig[]) {
 
     // 如果有 optionsType，则异步获取 options
     if (item.optionsType) {
-      finalItem.options = await getSimpleOptionsList(item.optionsType)
+      getSimpleOptionsList(item.optionsType).then((res) => {
+        finalItem.options = res
+      })
     }
 
     // 设置默认 placeholder
@@ -205,7 +207,7 @@ async function processFormConfig(formConfig: IFormConfig[]) {
     result.push(finalItem)
   }
 
-  formConfigComputed.value = result
+  processFormConfig.value = result
 }
 
 // 监听 props.formConfig 变化时重新处理配置
@@ -213,7 +215,7 @@ watch(
   () => props.formConfig,
   async (newVal) => {
     if (newVal && newVal.length > 0) {
-      await processFormConfig(newVal)
+      initFormConfig(newVal)
     }
   },
   { immediate: true, deep: true },

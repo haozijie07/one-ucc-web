@@ -336,7 +336,9 @@ async function initTableSearch() {
   for (const index in props.tableSearch) {
     const item = props.tableSearch[index]
     if (item.optionsType) {
-      item.options = await getSimpleOptionsList(item.optionsType)
+      getSimpleOptionsList(item.optionsType).then((res) => {
+        item.options = res
+      })
     }
     result.push({
       ...item,
@@ -427,11 +429,11 @@ function handleShowMorCondition() {
 
 watchEffect(async () => {
   // 当 props.tableSearch 发生变化时，重新执行初始化逻辑
-  await initTableSearch()
+  initTableSearch()
 })
 
 onMounted(async () => {
-  await initTableSearch()
+  initTableSearch()
   initSearchFormData()
   handleSearch()
 })
