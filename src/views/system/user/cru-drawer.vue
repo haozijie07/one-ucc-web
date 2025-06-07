@@ -176,9 +176,10 @@ const formConfig = ref<IFormConfig[]>([
     type: 'datetime',
   },
   {
-    prop: 'department',
+    prop: 'departmentId',
     label: '部门',
-    type: 'text',
+    type: 'select',
+    optionsType: 'department',
   },
   {
     prop: 'position',

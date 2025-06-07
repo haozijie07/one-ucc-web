@@ -2,7 +2,7 @@
   <div class="haozi-table-search">
     <el-form ref="formRef" :model="searchFormData" label-width="auto">
       <el-row :gutter="20">
-        <template v-for="(searchItem, searchIndex) in tableSearchComputed" :key="searchItem.field">
+        <template v-for="(searchItem, searchIndex) in processedTableSearch" :key="searchItem.field">
           <el-col v-show="searchIndex < 6" :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
             <el-form-item
               :label="searchItem.title"
@@ -156,7 +156,7 @@
       </template>
       <el-form ref="moreConditionFormRef" :model="searchFormData" label-width="auto">
         <el-row :gutter="20">
-          <template v-for="searchItem in tableSearchComputed" :key="searchItem.field">
+          <template v-for="searchItem in processedTableSearch" :key="searchItem.field">
             <el-col>
               <el-form-item
                 :label="searchItem.title"
@@ -306,15 +306,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import { operatorMap } from '../utils/operator-map'
 import type { ElForm } from 'element-plus'
+import { getSimpleOptionsList } from '@/utils/common-fn'
 
 const props = defineProps<{
   tableSearch: ITableSearch[]
 }>()
 
-const tableSearchComputed = computed(() => {
+const processedTableSearch = ref<ITableSearch[]>([])
+async function initTableSearch() {
   const placeholderMap: Record<string, string> = {
     text: '请输入',
     textarea: '请输入',
@@ -329,15 +331,22 @@ const tableSearchComputed = computed(() => {
     switch: '请选择',
     custom: '',
   }
-  return props.tableSearch.map((item) => {
-    return {
+
+  const result: ITableSearch[] = []
+  for (const index in props.tableSearch) {
+    const item = props.tableSearch[index]
+    if (item.optionsType) {
+      item.options = await getSimpleOptionsList(item.optionsType)
+    }
+    result.push({
       ...item,
       placeholder: item.placeholder || placeholderMap[item.type] + item.title,
       startPlaceholder: item.startPlaceholder || placeholderMap[item.type] + '开始' + item.title,
       endPlaceholder: item.endPlaceholder || placeholderMap[item.type] + '结束' + item.title,
-    }
-  })
-})
+    })
+  }
+  processedTableSearch.value = result
+}
 
 const emits = defineEmits<{
   (e: 'onSearch'): void
@@ -351,7 +360,7 @@ const searchFormData = defineModel<any>('searchFormData', { default: {} })
 
 /** 表单初始化 */
 function initSearchFormData(prop?: string | string[]) {
-  tableSearchComputed.value.forEach((item) => {
+  processedTableSearch.value.forEach((item) => {
     if (prop) {
       if (prop !== item.field) return
       if (Array.isArray(prop) && !prop.includes(item.field)) return
@@ -398,6 +407,7 @@ function handleSearch() {
   formRef.value
     ?.validate()
     .then(() => {
+      moreConditionVisible.value = false
       emits('onSearch')
     })
     .catch(() => {
@@ -415,7 +425,13 @@ function handleShowMorCondition() {
   moreConditionVisible.value = true
 }
 
-onMounted(() => {
+watchEffect(async () => {
+  // 当 props.tableSearch 发生变化时，重新执行初始化逻辑
+  await initTableSearch()
+})
+
+onMounted(async () => {
+  await initTableSearch()
   initSearchFormData()
   handleSearch()
 })

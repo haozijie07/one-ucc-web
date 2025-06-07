@@ -58,6 +58,7 @@ declare global {
     operator?: Operator
     defaultValue?: string | number
     options?: SelectOptionType[]
+    optionsType?: 'user' | 'department'
     rules?: FormItemRule[]
     itemProps?:
       | InputProps

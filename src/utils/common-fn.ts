@@ -1,3 +1,5 @@
+import { OptionControllerGetOptions } from '@/api/common/api'
+
 /**
  * 深度拷贝函数
  * @param source 要拷贝的值
@@ -79,4 +81,14 @@ export function deepClone<T>(source: T, weakMap = new WeakMap<any, any>()): T {
   Object.setPrototypeOf(copy, Object.getPrototypeOf(source))
 
   return copy
+}
+
+/**
+ * 获取通用下拉选项列表
+ */
+export async function getSimpleOptionsList(
+  type: 'user' | 'department',
+): Promise<APIGetOptionResponseDto[]> {
+  const res = await OptionControllerGetOptions({ type })
+  return res
 }

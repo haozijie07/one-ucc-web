@@ -34,6 +34,7 @@ declare global {
       label: string
       value: string
     }[]
+    optionsType?: 'user' | 'department'
     render?: (prop, data) => JSX.Element
     rules?: FormItemRule[]
     props?: FormItemProps

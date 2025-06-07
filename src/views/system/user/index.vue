@@ -116,13 +116,14 @@ const tableSearch = ref<ITableSearch[]>([
     type: 'datetimerange',
   },
   {
-    field: 'position',
-    title: '职位',
-    type: 'text',
+    field: 'departmentId',
+    title: '部门',
+    type: 'select',
+    optionsType: 'department',
   },
   {
-    field: 'department',
-    title: '部门',
+    field: 'position',
+    title: '职位',
     type: 'text',
   },
   {

@@ -157,7 +157,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import type { FormInstance, FormProps } from 'element-plus'
 
 const props = defineProps<{
@@ -165,7 +164,12 @@ const props = defineProps<{
   formProps?: Partial<FormProps>
 }>()
 
-const formConfigComputed = computed(() => {
+import { ref, watch } from 'vue'
+import { getSimpleOptionsList } from '@/utils/common-fn'
+
+const formConfigComputed = ref<IFormConfig[]>([])
+
+async function processFormConfig(formConfig: IFormConfig[]) {
   const placeholderMap: Record<widgetType, string> = {
     text: '请输入',
     textarea: '请输入',
@@ -180,15 +184,40 @@ const formConfigComputed = computed(() => {
     switch: '请选择',
     custom: '',
   }
-  return props.formConfig.map((item) => {
-    return {
-      ...item,
-      placeholder: item.placeholder || placeholderMap[item.type] + item.label,
-      startPlaceholder: item.startPlaceholder || placeholderMap[item.type] + '开始' + item.label,
-      endPlaceholder: item.endPlaceholder || placeholderMap[item.type] + '结束' + item.label,
+
+  const result: IFormConfig[] = []
+
+  for (const item of formConfig) {
+    const finalItem = { ...item }
+
+    // 如果有 optionsType，则异步获取 options
+    if (item.optionsType) {
+      finalItem.options = await getSimpleOptionsList(item.optionsType)
     }
-  })
-})
+
+    // 设置默认 placeholder
+    finalItem.placeholder = finalItem.placeholder || placeholderMap[item.type] + item.label
+    finalItem.startPlaceholder =
+      finalItem.startPlaceholder || placeholderMap[item.type] + '开始' + item.label
+    finalItem.endPlaceholder =
+      finalItem.endPlaceholder || placeholderMap[item.type] + '结束' + item.label
+
+    result.push(finalItem)
+  }
+
+  formConfigComputed.value = result
+}
+
+// 监听 props.formConfig 变化时重新处理配置
+watch(
+  () => props.formConfig,
+  async (newVal) => {
+    if (newVal && newVal.length > 0) {
+      await processFormConfig(newVal)
+    }
+  },
+  { immediate: true, deep: true },
+)
 
 const formData = defineModel<Record<string, any>>({ default: {}, required: true })
 
