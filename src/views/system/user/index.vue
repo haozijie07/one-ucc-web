@@ -29,7 +29,7 @@
 <script setup lang="tsx" name="user">
 import { UserControllerDelete, UserControllerPageList } from '@/api/system/api'
 import { HaoziTable } from '@/components/advancedComponents/index'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { dayjs, ElMessage, ElMessageBox } from 'element-plus'
 import { ref, useTemplateRef } from 'vue'
 import CruDrawer from './cru-drawer.vue'
 
@@ -387,6 +387,10 @@ const tableColumn = ref<ITableColumn[]>([
     field: 'birthday',
     title: '生日',
     width: 100,
+    type: 'custom',
+    render({ row }: { row: any }) {
+      return <div>{dayjs(row.birthday).format('YYYY-MM-DD')}</div>
+    },
   },
   {
     field: 'createdAt',
