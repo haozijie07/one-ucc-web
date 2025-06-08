@@ -180,12 +180,13 @@ const formConfig = ref<IFormConfig[]>([
     label: '部门',
     type: 'select',
     optionsType: 'department',
+    rules: [{ required: true, message: '部门不能为空' }],
   },
   {
     prop: 'position',
     label: '职位',
     type: 'text',
-    rules: [{ required: true, message: '入职时间不能为空' }],
+    rules: [{ required: true, message: '职位不能为空' }],
   },
   {
     prop: 'education',

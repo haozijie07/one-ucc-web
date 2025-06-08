@@ -44,13 +44,17 @@
             >
               <template #default="scope">
                 <template v-if="item.type === 'image'">
-                  <el-image style="height: 70px" :src="scope.row[item.field]" fit="contain" />
+                  <el-image
+                    style="height: 70px"
+                    :src="objGetValueByPath(scope.row, item.field)"
+                    fit="contain"
+                  />
                 </template>
                 <template v-else-if="item.type === 'custom'">
                   <component :is="item.render?.(scope)" />
                 </template>
                 <template v-else>
-                  {{ scope.row[item.field] }}
+                  {{ objGetValueByPath(scope.row, item.field) }}
                 </template>
               </template>
               <template v-if="item.isSummaryCol && item.footerRender" #footer="scope">
@@ -82,6 +86,7 @@ import { ref, onMounted, useTemplateRef, computed } from 'vue'
 import SearchForm from './SearchForm/index.vue'
 import type { VxeTablePropTypes, VxeTableProps, VxeToolbarInstance } from 'vxe-table'
 import { isEmpty } from '@/utils/is'
+import { objGetValueByPath } from '@/utils/object'
 
 const props = withDefaults(
   defineProps<{

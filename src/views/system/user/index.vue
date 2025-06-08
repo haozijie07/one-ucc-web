@@ -155,18 +155,8 @@ const tableSearch = ref<ITableSearch[]>([
     type: 'text',
   },
   {
-    field: 'idPhoto',
-    title: '身份证照片',
-    type: 'text',
-  },
-  {
     field: 'bankCard',
     title: '银行卡账号',
-    type: 'text',
-  },
-  {
-    field: 'bankCardPhoto',
-    title: '银行卡照片',
     type: 'text',
   },
   {
@@ -339,7 +329,7 @@ const tableColumn = ref<ITableColumn[]>([
     width: 120,
   },
   {
-    field: 'department',
+    field: 'department.name',
     title: '部门',
     width: 100,
   },
