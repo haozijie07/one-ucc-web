@@ -2,6 +2,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 import http from 'node:http'
 import url from 'url'
+import { resolveType } from './resolve-type.mjs'
+import { generateTypes } from './gen-types.mjs'
+import { generateTableFormConfig } from './gen-table-form-config.mjs'
 
 // 替代 __dirname
 const __filename = url.fileURLToPath(import.meta.url)
@@ -36,111 +39,8 @@ function fetchSwaggerJson(swaggerUrl, callback) {
     .on('error', callback)
 }
 
-/**
- *
- * @param {Object} prop 一个 { type, example, descript, ... } 或 { $ref } 对象
- * @returns
- */
-function resolveType(prop) {
-  if (!prop) return 'any'
-
-  // 引用类型
-  if (prop.$ref) {
-    const dto = prop.$ref.split('/').pop()
-    return `API${dto}`
-  }
-
-  // 数组类型
-  if (prop.type === 'array') {
-    return `${resolveType(prop.items)}[]`
-  }
-
-  // 枚举类型
-  if (prop.enum) {
-    return prop.enum.map((v) => `'${v}'`).join(' | ')
-  }
-
-  // 处理 allOf 结构：常见于统一响应封装
-  if (prop.allOf) {
-    const allOfItem = prop.allOf.find((item) => item.properties?.data)
-    const data = allOfItem?.properties?.data
-
-    if (data) {
-      // 1. data 是数组：如 ListResult<T>
-      if (data.type === 'array' && data.items?.$ref) {
-        const dto = data.items.$ref.split('/').pop()
-        return `API${dto}[]`
-      }
-
-      // 2. data 是分页嵌套对象：如 PageResult<{ data: T[] }>
-      if (data.type === 'object' && data.properties?.data?.items?.$ref) {
-        const deepData = data.properties.data
-        const dto = deepData.items.$ref.split('/').pop()
-        return `IPageListData<API${dto}>`
-      }
-
-      // 3. data 是引用
-      if (data.$ref) {
-        const dto = data.$ref.split('/').pop()
-        return `API${dto}`
-      }
-    }
-  }
-
-  // 原始类型
-  switch (prop.type) {
-    case 'string':
-      return 'string'
-    case 'integer':
-    case 'number':
-      return 'number'
-    case 'boolean':
-      return 'boolean'
-    case 'object':
-      return 'Record<string, any>'
-    default:
-      return 'any'
-  }
-}
-
 function toCamelCase(str) {
   return str.replace(/[-_\/{}]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
-}
-
-/**
- *
- * @param {Object} schemas 字段数据描述
- * @returns
- */
-function generateTypes(schemas) {
-  let lines = [`// Auto-generated from swagger`, ``]
-  // 每个name都是一个dto，用来对应ts的interface名称
-  for (const name in schemas) {
-    const schema = schemas[name]
-    lines.push(`interface ${'API' + name} {`)
-    // schema.properties是一个对象，里面是每个字段的信息：字段：{ type, description }
-    const props = schema.properties || {}
-    // required是一个数组，里面是必填的字段
-    const required = schema.required || []
-    for (const key in props) {
-      // 字段名
-      const prop = props[key]
-      // 是否必填
-      const isRequired = required.includes(key)
-      // 可选表达式
-      const optional = isRequired ? '' : '?'
-      // 字段类型
-      const type = resolveType(prop)
-      // 字段描述
-      const description = prop.description || ''
-      if (description) {
-        lines.push(`  /** ${description} */`)
-      }
-      lines.push(`  ${key}${optional}: ${type};`)
-    }
-    lines.push('}\n')
-  }
-  return lines.join('\n')
 }
 
 /**
@@ -237,86 +137,6 @@ function generateApi(swagger) {
   return lines.join('\n')
 }
 
-function resolveWidgetType(type) {
-  switch (type) {
-    case 'string':
-      return 'text'
-    case 'integer':
-    case 'number':
-      return 'number'
-    case 'date':
-      return 'datetimerange'
-    default:
-      return 'text'
-  }
-}
-
-/**
- *
- * @param {Object} schemas 字段数据描述
- * @returns
- */
-function generateTableFormConfig(schemas) {
-  let tableColumn = [`// Auto-generated from swagger`, ``]
-  let tableSearch = [`// Auto-generated from swagger`, ``]
-  let formConfig = [`// Auto-generated from swagger`, ``]
-  // 每个name都是一个dto，用来对应ts的interface名称
-  for (const name in schemas) {
-    if (!name.startsWith('Create')) continue
-    const schema = schemas[name]
-    tableColumn.push(`const ${name}TableColumn = [`)
-    tableSearch.push(`const ${name}TableSearch = [`)
-    formConfig.push(`const ${name}FormConfig = [`)
-    // schema.properties是一个对象，里面是每个字段的信息：字段：{ type, description }
-    const props = schema.properties || {}
-    // required是一个数组，里面是必填的字段
-    const required = schema.required || []
-    for (const key in props) {
-      tableColumn.push(`  {`)
-      tableSearch.push(`  {`)
-      formConfig.push(`  {`)
-      // 字段名
-      const prop = props[key]
-      // 是否必填
-      const isRequired = required.includes(key)
-      // 可选表达式
-      const optional = isRequired ? '' : '?'
-      // 字段类型
-      const type = resolveType(prop)
-      const widgetType = resolveWidgetType(type)
-      // 字段描述
-      const description = prop.description || ''
-
-      tableColumn.push(`    field: '${key}',`)
-      tableColumn.push(`    title: '${prop.description}',`)
-      tableColumn.push(`    width: 100,`)
-      tableColumn.push(`  },`)
-
-      tableSearch.push(`    field: '${key}',`)
-      tableSearch.push(`    title: '${prop.description}',`)
-      tableSearch.push(`    type: '${widgetType}',`)
-      tableSearch.push(`  },`)
-
-      formConfig.push(`    prop: '${key}',`)
-      formConfig.push(`    label: '${prop.description}',`)
-      formConfig.push(`    type: '${widgetType}',`)
-      if (optional === '') {
-        formConfig.push(`    rules: [{ required: true, message: '${prop.description}不能为空' }],`)
-      }
-      formConfig.push(`  },`)
-    }
-    tableSearch.push(']\n')
-    tableColumn.push(']\n')
-    formConfig.push(']\n')
-  }
-
-  return {
-    tableColumn: tableColumn.join('\n'),
-    tableSearch: tableSearch.join('\n'),
-    formConfig: formConfig.join('\n'),
-  }
-}
-
 // ---------- MAIN ----------
 function run(modelArg) {
   if (!modelArg) {
@@ -329,7 +149,7 @@ function run(modelArg) {
   }
   swaggerSource = swaggerJson[modelArg].url
   swaggerGroupName = swaggerJson[modelArg].name
-  outputDir = path.resolve(__dirname, `../api/${swaggerGroupName}`)
+  outputDir = path.resolve(__dirname, `../../api/${swaggerGroupName}`)
   fetchSwaggerJson(swaggerSource, (err, swagger) => {
     if (err) {
       console.error('❌ 读取 swagger 失败：', err.message)

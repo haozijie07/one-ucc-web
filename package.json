@@ -13,7 +13,7 @@
     "lint:eslint": "eslint . --fix",
     "lint": "run-s lint:*",
     "format": "prettier --write src/",
-    "gen-api": "node src/script/gen-api.js"
+    "gen-api": "node src/script/gen-api/index.mjs"
   },
   "dependencies": {
     "@vueuse/core": "^13.3.0",
