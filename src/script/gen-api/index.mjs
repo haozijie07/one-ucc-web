@@ -166,7 +166,7 @@ function run(modelArg) {
     const apiCode = generateApi(swagger)
 
     // 生成表格配置、表单配置
-    const { tableColumn, tableSearch, formConfig } = generateTableFormConfig(
+    const { tableColumn, tableSearch, formConfig, formData } = generateTableFormConfig(
       swagger.components?.schemas || {},
     )
 
@@ -234,8 +234,20 @@ function run(modelArg) {
       formConfigFileName = 'api/pages-resource/formConfig.ts'
     }
 
+    // formData
+    let formDataFileName
+    const formDataFile = path.join(pagesResourceDir, 'formData.ts')
+    if (fs.existsSync(formDataFile)) {
+      fs.mkdirSync(pagesResourceBackDir, { recursive: true })
+      fs.writeFileSync(path.join(pagesResourceBackDir, './formData.ts'), formData, 'utf-8')
+      formDataFileName = 'api/back/pages-resource/formData.ts'
+    } else {
+      fs.writeFileSync(path.join(pagesResourceDir, 'formData.ts'), formData, 'utf-8')
+      formDataFileName = 'api/pages-resource/formConfig.ts'
+    }
+
     console.log(
-      `✅ 已生成：${typeFileName} 与 ${apiFileName} 与 ${tableConfigFileName} 与 ${tableSearchFileName} 与 ${formConfigFileName}`,
+      `✅ 已生成：${typeFileName} 与 ${apiFileName} 与 ${tableConfigFileName} 与 ${tableSearchFileName} 与 ${formConfigFileName} 与 ${formDataFileName}`,
     )
   })
 }

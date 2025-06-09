@@ -1,6 +1,11 @@
 // Auto-generated from swagger
 
-const CreateDepartmentDtoTableColumn = [
+const ResponseDepartmentDtoTableColumn = [
+  {
+    field: 'id',
+    title: '主键 ID',
+    width: 100,
+  },
   {
     field: 'name',
     title: '部门名称',
@@ -93,7 +98,12 @@ const CreateDepartmentDtoTableColumn = [
   },
 ]
 
-const CreateUserDtoTableColumn = [
+const ResponseUserDtoTableColumn = [
+  {
+    field: 'id',
+    title: 'id',
+    width: 100,
+  },
   {
     field: 'username',
     title: '用户名',
@@ -131,7 +141,7 @@ const CreateUserDtoTableColumn = [
   },
   {
     field: 'address',
-    title: '地址',
+    title: '住址',
     width: 100,
   },
   {
@@ -176,7 +186,7 @@ const CreateUserDtoTableColumn = [
   },
   {
     field: 'department',
-    title: '部门',
+    title: '关联部门详情',
     width: 100,
   },
   {

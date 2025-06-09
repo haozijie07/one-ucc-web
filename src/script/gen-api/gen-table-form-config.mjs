@@ -1,6 +1,10 @@
 import { resolveWidgetType } from './widget-type.mjs'
 import { resolveType } from './resolve-type.mjs'
 
+function toCamelCase(str) {
+  return str.replace(/[-_\/{}]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
+}
+
 /**
  *
  * @param {Object} schemas 字段数据描述
@@ -10,13 +14,15 @@ export function generateTableFormConfig(schemas) {
   let tableColumn = [`// Auto-generated from swagger`, ``]
   let tableSearch = [`// Auto-generated from swagger`, ``]
   let formConfig = [`// Auto-generated from swagger`, ``]
+  let formData = [`// Auto-generated from swagger`, `import { ref } from 'vue'`, ``]
   // 每个name都是一个dto，用来对应ts的interface名称
   for (const name in schemas) {
-    if (!name.startsWith('Create')) continue
+    if (!name.startsWith('Response')) continue
     const schema = schemas[name]
     tableColumn.push(`const ${name}TableColumn = [`)
     tableSearch.push(`const ${name}TableSearch = [`)
     formConfig.push(`const ${name}FormConfig = [`)
+    formData.push(`const ${name}FormData = ref<API${name}>({`)
     // schema.properties是一个对象，里面是每个字段的信息：字段：{ type, description }
     const props = schema.properties || {}
     // required是一个数组，里面是必填的字段
@@ -54,15 +60,19 @@ export function generateTableFormConfig(schemas) {
         formConfig.push(`    rules: [{ required: true, message: '${prop.description}不能为空' }],`)
       }
       formConfig.push(`  },`)
+
+      formData.push(`   ${key}: undefined,`)
     }
     tableSearch.push(']\n')
     tableColumn.push(']\n')
     formConfig.push(']\n')
+    formData.push('})\n')
   }
 
   return {
     tableColumn: tableColumn.join('\n'),
     tableSearch: tableSearch.join('\n'),
     formConfig: formConfig.join('\n'),
+    formData: formData.join('\n'),
   }
 }
