@@ -29,7 +29,25 @@ import { isFalse, isIdCard } from '@/utils/is'
 const formRef = useTemplateRef('formRef')
 const drawerVisible = ref(false)
 const { formData, resetFormData } = useFormData({
-  isEnable: true,
+  id: '',
+  username: '',
+  password: '',
+  name: '',
+  email: '',
+  mobile: '',
+  sex: '',
+  address: '',
+  nativeAddress: '',
+  idCard: '',
+  isEnable: false,
+  joinTime: '',
+  position: '',
+  education: '',
+  graduateSchool: '',
+  emergencyContacts: '',
+  emergencyContactPhone: '',
+  politicalStatus: '',
+  birthday: '',
 })
 
 const emits = defineEmits<{

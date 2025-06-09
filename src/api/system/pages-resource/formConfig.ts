@@ -1,6 +1,12 @@
 // Auto-generated from swagger
 
-const CreateDepartmentDtoFormConfig = [
+const ResponseDepartmentDtoFormConfig = [
+  {
+    prop: 'id',
+    label: '主键 ID',
+    type: 'text',
+    rules: [{ required: true, message: '主键 ID不能为空' }],
+  },
   {
     prop: 'name',
     label: '部门名称',
@@ -48,6 +54,7 @@ const CreateDepartmentDtoFormConfig = [
     prop: 'createdAt',
     label: '创建时间',
     type: 'text',
+    rules: [{ required: true, message: '创建时间不能为空' }],
   },
   {
     prop: 'createdBy',
@@ -64,6 +71,7 @@ const CreateDepartmentDtoFormConfig = [
     prop: 'updatedAt',
     label: '更新时间',
     type: 'text',
+    rules: [{ required: true, message: '更新时间不能为空' }],
   },
   {
     prop: 'updatedBy',
@@ -97,7 +105,13 @@ const CreateDepartmentDtoFormConfig = [
   },
 ]
 
-const CreateUserDtoFormConfig = [
+const ResponseUserDtoFormConfig = [
+  {
+    prop: 'id',
+    label: 'id',
+    type: 'text',
+    rules: [{ required: true, message: 'id不能为空' }],
+  },
   {
     prop: 'username',
     label: '用户名',
@@ -141,9 +155,9 @@ const CreateUserDtoFormConfig = [
   },
   {
     prop: 'address',
-    label: '地址',
+    label: '住址',
     type: 'text',
-    rules: [{ required: true, message: '地址不能为空' }],
+    rules: [{ required: true, message: '住址不能为空' }],
   },
   {
     prop: 'nativeAddress',
@@ -191,9 +205,8 @@ const CreateUserDtoFormConfig = [
   },
   {
     prop: 'department',
-    label: '部门',
+    label: '关联部门详情',
     type: 'text',
-    rules: [{ required: true, message: '部门不能为空' }],
   },
   {
     prop: 'departmentId',
@@ -276,6 +289,7 @@ const CreateUserDtoFormConfig = [
     prop: 'createdAt',
     label: '创建时间',
     type: 'text',
+    rules: [{ required: true, message: '创建时间不能为空' }],
   },
   {
     prop: 'createdBy',
@@ -292,6 +306,7 @@ const CreateUserDtoFormConfig = [
     prop: 'updatedAt',
     label: '更新时间',
     type: 'text',
+    rules: [{ required: true, message: '更新时间不能为空' }],
   },
   {
     prop: 'updatedBy',

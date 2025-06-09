@@ -1,6 +1,11 @@
 // Auto-generated from swagger
 
-const CreateDepartmentDtoTableSearch = [
+const ResponseDepartmentDtoTableSearch = [
+  {
+    field: 'id',
+    title: '主键 ID',
+    type: 'text',
+  },
   {
     field: 'name',
     title: '部门名称',
@@ -93,7 +98,12 @@ const CreateDepartmentDtoTableSearch = [
   },
 ]
 
-const CreateUserDtoTableSearch = [
+const ResponseUserDtoTableSearch = [
+  {
+    field: 'id',
+    title: 'id',
+    type: 'text',
+  },
   {
     field: 'username',
     title: '用户名',
@@ -131,7 +141,7 @@ const CreateUserDtoTableSearch = [
   },
   {
     field: 'address',
-    title: '地址',
+    title: '住址',
     type: 'text',
   },
   {
@@ -176,7 +186,7 @@ const CreateUserDtoTableSearch = [
   },
   {
     field: 'department',
-    title: '部门',
+    title: '关联部门详情',
     type: 'text',
   },
   {

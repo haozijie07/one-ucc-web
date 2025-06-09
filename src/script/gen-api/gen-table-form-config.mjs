@@ -1,8 +1,21 @@
 import { resolveWidgetType } from './widget-type.mjs'
 import { resolveType } from './resolve-type.mjs'
 
-function toCamelCase(str) {
-  return str.replace(/[-_\/{}]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
+function genDefaultValue(type) {
+  switch (type) {
+    case 'string':
+      return `''`
+    case 'number':
+      return 0
+    case 'boolean':
+      return false
+    case 'array':
+      return '[]'
+    case 'object':
+      return '{}'
+    default:
+      return `undefined`
+  }
 }
 
 /**
@@ -61,7 +74,9 @@ export function generateTableFormConfig(schemas) {
       }
       formConfig.push(`  },`)
 
-      formData.push(`   ${key}: undefined,`)
+      if (genDefaultValue(type) !== 'undefined' && optional === '') {
+        formData.push(`   ${key}: ${genDefaultValue(type)},`)
+      }
     }
     tableSearch.push(']\n')
     tableColumn.push(']\n')

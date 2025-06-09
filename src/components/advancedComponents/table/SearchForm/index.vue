@@ -427,10 +427,10 @@ function handleShowMorCondition() {
   moreConditionVisible.value = true
 }
 
-watchEffect(async () => {
-  // 当 props.tableSearch 发生变化时，重新执行初始化逻辑
-  initTableSearch()
-})
+// watchEffect(async () => {
+//   // 当 props.tableSearch 发生变化时，重新执行初始化逻辑
+//   initTableSearch()
+// })
 
 onMounted(async () => {
   initTableSearch()

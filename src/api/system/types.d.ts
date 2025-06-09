@@ -236,7 +236,7 @@ interface APICreateUserDto {
   mobile: string;
   /** 性别 */
   sex: string;
-  /** 地址 */
+  /** 住址 */
   address: string;
   /** 籍贯 */
   nativeAddress: string;
@@ -254,8 +254,8 @@ interface APICreateUserDto {
   joinTime: string;
   /** 离职时间 */
   leaveTime?: string;
-  /** 部门 */
-  department: Record<string, any>;
+  /** 关联部门详情 */
+  department?: Record<string, any>;
   /** 部门ID */
   departmentId?: string;
   /** 职位 */
@@ -287,7 +287,7 @@ interface APICreateUserDto {
   /** 创建时间 */
   createdAt?: string;
   /** 创建人 */
-  createdBy: string;
+  createdBy?: string;
   /** 创建人ID */
   createdId?: string;
   /** 更新时间 */
