@@ -195,40 +195,43 @@ function run(modelArg) {
       apiFileName = 'api/api.ts'
     }
 
+    const pagesResourceDir = path.join(outputDir, './pages-resource')
+    fs.mkdirSync(pagesResourceDir, { recursive: true })
+    const pagesResourceBackDir = path.join(outputDir, './back/pages-resource')
     // tableColumn
     let tableConfigFileName
-    const tableConfigFile = path.join(outputDir, 'tableColumn.ts')
+    const tableConfigFile = path.join(pagesResourceDir, 'tableColumn.ts')
     if (fs.existsSync(tableConfigFile)) {
-      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-      fs.writeFileSync(path.join(outputDir, './back/tableColumn.ts'), tableColumn, 'utf-8')
-      tableConfigFileName = 'api/back/tableColumn.ts'
+      fs.mkdirSync(pagesResourceBackDir, { recursive: true })
+      fs.writeFileSync(path.join(pagesResourceBackDir, './tableColumn.ts'), tableColumn, 'utf-8')
+      tableConfigFileName = 'api/back/pages-resource/tableColumn.ts'
     } else {
-      fs.writeFileSync(path.join(outputDir, 'tableColumn.ts'), tableColumn, 'utf-8')
-      tableConfigFileName = 'api/tableColumn.ts'
+      fs.writeFileSync(path.join(pagesResourceDir, 'tableColumn.ts'), tableColumn, 'utf-8')
+      tableConfigFileName = 'api/pages-resource/tableColumn.ts'
     }
 
     // tableSearch
     let tableSearchFileName
-    const tableSearchFile = path.join(outputDir, 'tableSearch.ts')
+    const tableSearchFile = path.join(pagesResourceDir, 'tableSearch.ts')
     if (fs.existsSync(tableSearchFile)) {
-      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-      fs.writeFileSync(path.join(outputDir, './back/tableSearch.ts'), tableSearch, 'utf-8')
-      tableSearchFileName = 'api/back/tableSearch.ts'
+      fs.mkdirSync(pagesResourceBackDir, { recursive: true })
+      fs.writeFileSync(path.join(pagesResourceBackDir, './tableSearch.ts'), tableSearch, 'utf-8')
+      tableSearchFileName = 'api/back/pages-resource/tableSearch.ts'
     } else {
-      fs.writeFileSync(path.join(outputDir, 'tableSearch.ts'), tableSearch, 'utf-8')
-      tableSearchFileName = 'api/tableSearch.ts'
+      fs.writeFileSync(path.join(pagesResourceDir, 'tableSearch.ts'), tableSearch, 'utf-8')
+      tableSearchFileName = 'api/pages-resource/tableSearch.ts'
     }
 
     // formConfig
     let formConfigFileName
-    const formConfigFile = path.join(outputDir, 'formConfig.ts')
+    const formConfigFile = path.join(pagesResourceDir, 'formConfig.ts')
     if (fs.existsSync(formConfigFile)) {
-      fs.mkdirSync(path.join(outputDir, './back'), { recursive: true })
-      fs.writeFileSync(path.join(outputDir, './back/formConfig.ts'), formConfig, 'utf-8')
-      formConfigFileName = 'api/back/formConfig.ts'
+      fs.mkdirSync(pagesResourceBackDir, { recursive: true })
+      fs.writeFileSync(path.join(pagesResourceBackDir, './formConfig.ts'), formConfig, 'utf-8')
+      formConfigFileName = 'api/back/pages-resource/formConfig.ts'
     } else {
-      fs.writeFileSync(path.join(outputDir, 'formConfig.ts'), formConfig, 'utf-8')
-      formConfigFileName = 'api/formConfig.ts'
+      fs.writeFileSync(path.join(pagesResourceDir, 'formConfig.ts'), formConfig, 'utf-8')
+      formConfigFileName = 'api/pages-resource/formConfig.ts'
     }
 
     console.log(
