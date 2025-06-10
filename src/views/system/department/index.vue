@@ -43,12 +43,14 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'parentId',
     title: '上级部门',
-    type: 'text',
+    type: 'select',
+    optionsType: 'department',
   },
   {
-    field: 'leader',
+    field: 'leaderId',
     title: '部门负责人',
-    type: 'text',
+    type: 'select',
+    optionsType: 'user',
   },
   {
     field: 'isEnable',

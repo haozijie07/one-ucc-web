@@ -306,7 +306,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from 'vue'
+import { onMounted, ref } from 'vue'
 import { operatorMap } from '../utils/operator-map'
 import type { ElForm } from 'element-plus'
 import { getSimpleOptionsList } from '@/utils/common-fn'
@@ -335,9 +335,12 @@ async function initTableSearch() {
   const result: ITableSearch[] = []
   for (const index in props.tableSearch) {
     const item = props.tableSearch[index]
+    const options: any = []
     if (item.optionsType) {
-      getSimpleOptionsList(item.optionsType).then((res) => {
-        item.options = res
+      getSimpleOptionsList(item.optionsType).then((res: any[]) => {
+        res.forEach((item) => {
+          options.push(item)
+        })
       })
     }
     result.push({
@@ -345,6 +348,7 @@ async function initTableSearch() {
       placeholder: item.placeholder || placeholderMap[item.type] + item.title,
       startPlaceholder: item.startPlaceholder || placeholderMap[item.type] + '开始' + item.title,
       endPlaceholder: item.endPlaceholder || placeholderMap[item.type] + '结束' + item.title,
+      options: item.options || options,
     })
   }
   processedTableSearch.value = result
