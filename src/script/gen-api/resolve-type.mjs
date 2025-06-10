@@ -46,6 +46,8 @@ export function resolveType(prop) {
         const dto = data.$ref.split('/').pop()
         return `API${dto}`
       }
+
+      return resolveType(data)
     }
   }
 

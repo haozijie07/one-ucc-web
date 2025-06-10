@@ -39,7 +39,7 @@ export async function DepartmentControllerPageList(data: APIQueryDto, config?: R
 }
 
 /** 新增 user */
-export async function UserControllerCreate(data: APICreateUserDto, config?: RequestConfig): Promise<APIResponseUserDto> {
+export async function UserControllerCreate(data: APICreateUserDto, config?: RequestConfig): Promise<boolean> {
   const url = `/api/user`;
   return await uccAxios.post(url, data, { ...config });
 }
@@ -57,13 +57,13 @@ export async function UserControllerFindById(params: { id: string }, config?: Re
 }
 
 /** 修改 user */
-export async function UserControllerUpdate(params: { id: string }, data: APIUpdateUserDto, config?: RequestConfig): Promise<APIResponseUserDto> {
+export async function UserControllerUpdate(params: { id: string }, data: APIUpdateUserDto, config?: RequestConfig): Promise<boolean> {
   const url = `/api/user/${params.id}`;
   return await uccAxios.patch(url, data, { ...config });
 }
 
 /** 根据 ID 删除 user */
-export async function UserControllerDelete(params: { id: string }, config?: RequestConfig): Promise<APIResponseUserDto> {
+export async function UserControllerDelete(params: { id: string }, config?: RequestConfig): Promise<boolean> {
   const url = `/api/user/${params.id}`;
   return uccAxios.delete(url, { ...config });
 }
