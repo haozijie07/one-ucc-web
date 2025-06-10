@@ -113,7 +113,7 @@ const tableColumn = ref<ITableColumn[]>([
     width: 100,
   },
   {
-    field: 'leader',
+    field: 'leader.name',
     title: '部门负责人',
     width: 100,
   },

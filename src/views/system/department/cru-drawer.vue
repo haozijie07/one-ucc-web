@@ -53,9 +53,10 @@ const formConfig = ref<IFormConfig[]>([
     optionsType: 'department',
   },
   {
-    prop: 'leader',
+    prop: 'leaderId',
     label: '部门负责人',
-    type: 'text',
+    type: 'select',
+    optionsType: 'user',
   },
   {
     prop: 'sort',

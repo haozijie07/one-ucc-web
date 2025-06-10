@@ -326,12 +326,12 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'position',
     title: '职位',
-    width: 120,
+    width: 150,
   },
   {
     field: 'department.name',
     title: '部门',
-    width: 100,
+    width: 170,
   },
   {
     field: 'education',
