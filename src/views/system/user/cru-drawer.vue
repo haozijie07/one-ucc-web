@@ -198,7 +198,6 @@ const formConfig = ref<IFormConfig[]>([
     label: '部门',
     type: 'select',
     optionsType: 'department',
-    rules: [{ required: true, message: '部门不能为空' }],
   },
   {
     prop: 'position',
