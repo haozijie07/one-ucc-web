@@ -105,10 +105,10 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'name',
     title: '部门名称',
-    width: 100,
+    width: 150,
   },
   {
-    field: 'parentId',
+    field: 'parent.name',
     title: '上级部门',
     width: 100,
   },
@@ -130,7 +130,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'createdAt',
     title: '创建时间',
-    width: 100,
+    width: 170,
   },
   {
     field: 'createdBy',
@@ -140,7 +140,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'updatedAt',
     title: '更新时间',
-    width: 100,
+    width: 170,
   },
   {
     field: 'updatedBy',

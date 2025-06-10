@@ -29,6 +29,9 @@ import { isFalse } from '@/utils/is'
 const formRef = useTemplateRef('formRef')
 const drawerVisible = ref(false)
 const { formData, resetFormData } = useFormData({
+  id: '',
+  name: '',
+  sort: 0,
   isEnable: true,
 })
 
@@ -46,7 +49,8 @@ const formConfig = ref<IFormConfig[]>([
   {
     prop: 'parentId',
     label: '上级部门',
-    type: 'text',
+    type: 'select',
+    optionsType: 'department',
   },
   {
     prop: 'leader',

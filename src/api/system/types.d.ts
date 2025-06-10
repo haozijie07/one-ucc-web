@@ -1,356 +1,328 @@
 // Auto-generated from swagger
 
 interface APICommonResponse {
-  code: number;
-  message: string;
-  data: Record<string, any>;
+  code: number
+  message: string
+  data: Record<string, any>
 }
 
 interface APIResponseDepartmentDto {
   /** 主键 ID */
-  id: string;
+  id: string
   /** 部门名称 */
-  name: string;
+  name: string
   /** 部门编码 */
-  code?: string;
+  code?: string
   /** 上级部门 ID（用于树结构） */
-  parentId?: string;
-  parent?: Record<string, any>;
+  parentId?: string
+  parent?: Record<string, any>
   /** 部门负责人名称 */
-  leader?: string;
+  leader?: string
   /** 部门负责人用户 ID（可选） */
-  leaderId?: string;
+  leaderId?: string
   /** 排序 */
-  sort: number;
+  sort: number
   /** 是否启用 */
-  isEnable: boolean;
+  isEnable: boolean
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
   /** 创建人 */
-  createdBy: string;
+  createdBy: string
   /** 创建人ID */
-  createdId?: string;
+  createdId?: string
   /** 更新时间 */
-  updatedAt: string;
+  updatedAt: string
   /** 更新人 */
-  updatedBy?: string;
+  updatedBy?: string
   /** 更新人ID */
-  updatedId?: string;
+  updatedId?: string
   /** 删除时间 */
-  deletedAt?: string;
+  deletedAt?: string
   /** 删除人 */
-  deletedBy?: string;
+  deletedBy?: string
   /** 删除人ID */
-  deletedId?: string;
+  deletedId?: string
   /** 备注 */
-  remark?: string;
+  remark?: string
 }
 
 interface APICreateDepartmentDto {
   /** 部门名称 */
-  name: string;
+  name: string
   /** 部门编码 */
-  code?: string;
+  code?: string
   /** 上级部门 ID（用于树结构） */
-  parentId?: string;
-  parent?: Record<string, any>;
+  parentId?: string
   /** 部门负责人名称 */
-  leader?: string;
+  leader?: string
   /** 部门负责人用户 ID（可选） */
-  leaderId?: string;
+  leaderId?: string
   /** 排序 */
-  sort: number;
+  sort: number
   /** 是否启用 */
-  isEnable: boolean;
-  /** 创建时间 */
-  createdAt?: string;
-  /** 创建人 */
-  createdBy: string;
-  /** 创建人ID */
-  createdId?: string;
-  /** 更新时间 */
-  updatedAt?: string;
-  /** 更新人 */
-  updatedBy?: string;
-  /** 更新人ID */
-  updatedId?: string;
-  /** 删除时间 */
-  deletedAt?: string;
-  /** 删除人 */
-  deletedBy?: string;
-  /** 删除人ID */
-  deletedId?: string;
+  isEnable: boolean
   /** 备注 */
-  remark?: string;
+  remark?: string
 }
 
 interface APIUpdateDepartmentDto {
-  /** 主键 ID */
-  id: string;
   /** 部门名称 */
-  name?: string;
+  name?: string
   /** 部门编码 */
-  code?: string;
+  code?: string
   /** 上级部门 ID（用于树结构） */
-  parentId?: string;
-  parent?: Record<string, any>;
+  parentId?: string
   /** 部门负责人名称 */
-  leader?: string;
+  leader?: string
   /** 部门负责人用户 ID（可选） */
-  leaderId?: string;
+  leaderId?: string
   /** 排序 */
-  sort?: number;
+  sort?: number
   /** 是否启用 */
-  isEnable?: boolean;
-  /** 删除时间 */
-  deletedAt?: string;
-  /** 删除人 */
-  deletedBy?: string;
-  /** 删除人ID */
-  deletedId?: string;
+  isEnable?: boolean
   /** 备注 */
-  remark?: string;
+  remark?: string
 }
 
 interface APICondition {
   /** 字段名 */
-  field: string;
+  field: string
   /** 操作符 */
-  operator: 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'like' | 'in' | 'between';
+  operator: 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'like' | 'in' | 'between'
   /** 值 */
-  value?: Record<string, any>;
+  value?: Record<string, any>
 }
 
 interface APIQueryDto {
   /** 当前页码 */
-  pageIndex: number;
+  pageIndex: number
   /** 每页条数 */
-  pageSize: number;
+  pageSize: number
   /** 过滤条件 */
-  conditions?: APICondition[];
+  conditions?: APICondition[]
   /** 排序字段 */
-  sortBy: string;
+  sortBy: string
   /** 排序顺序 */
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: 'asc' | 'desc'
 }
 
 interface APISimpleDepartmentDto {
-  name: string;
+  name: string
 }
 
 interface APIResponseUserDto {
   /** id */
-  id: string;
+  id: string
   /** 用户名 */
-  username: string;
+  username: string
   /** 密码 */
-  password: string;
+  password: string
   /** 姓名 */
-  name: string;
+  name: string
   /** 头像 */
-  avatar?: string;
+  avatar?: string
   /** 邮箱 */
-  email: string;
+  email: string
   /** 手机号 */
-  mobile: string;
+  mobile: string
   /** 性别 */
-  sex: string;
+  sex: string
   /** 住址 */
-  address: string;
+  address: string
   /** 籍贯 */
-  nativeAddress: string;
+  nativeAddress: string
   /** 身份证号码 */
-  idCard: string;
+  idCard: string
   /** 是否启用 */
-  isEnable: boolean;
+  isEnable: boolean
   /** 最后登录时间 */
-  lastLoginAt?: string;
+  lastLoginAt?: string
   /** 登录失败次数 */
-  loginFailCount?: number;
+  loginFailCount?: number
   /** 登录锁定时间 */
-  loginLockedUnitl?: string;
+  loginLockedUnitl?: string
   /** 入职时间 */
-  joinTime: string;
+  joinTime: string
   /** 离职时间 */
-  leaveTime?: string;
+  leaveTime?: string
   /** 关联部门详情 */
-  department?: any;
+  department?: any
   /** 部门ID */
-  departmentId?: string;
+  departmentId?: string
   /** 职位 */
-  position: string;
+  position: string
   /** 职位ID */
-  positionId?: string;
+  positionId?: string
   /** 学历 */
-  education: string;
+  education: string
   /** 毕业院校 */
-  graduateSchool: string;
+  graduateSchool: string
   /** 紧急联系人 */
-  emergencyContacts: string;
+  emergencyContacts: string
   /** 紧急联系人电话 */
-  emergencyContactPhone: string;
+  emergencyContactPhone: string
   /** 身份证照片 */
-  idPhoto?: string;
+  idPhoto?: string
   /** 银行卡账号 */
-  bankCard?: string;
+  bankCard?: string
   /** 银行卡照片 */
-  bankCardPhoto?: string;
+  bankCardPhoto?: string
   /** 简历 */
-  resume?: string;
+  resume?: string
   /** 政治面貌 */
-  politicalStatus: string;
+  politicalStatus: string
   /** 在职状态 */
-  status?: string;
+  status?: string
   /** 生日 */
-  birthday: string;
+  birthday: string
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
   /** 创建人 */
-  createdBy: string;
+  createdBy: string
   /** 创建人ID */
-  createdId?: string;
+  createdId?: string
   /** 更新时间 */
-  updatedAt: string;
+  updatedAt: string
   /** 更新人 */
-  updatedBy?: string;
+  updatedBy?: string
   /** 更新人ID */
-  updatedId?: string;
+  updatedId?: string
   /** 删除时间 */
-  deletedAt?: string;
+  deletedAt?: string
   /** 删除人 */
-  deletedBy?: string;
+  deletedBy?: string
   /** 删除人ID */
-  deletedId?: string;
+  deletedId?: string
   /** 备注 */
-  remark?: string;
+  remark?: string
 }
 
 interface APICreateUserDto {
   /** 用户名 */
-  username: string;
+  username: string
   /** 密码 */
-  password: string;
+  password: string
   /** 姓名 */
-  name: string;
+  name: string
   /** 头像 */
-  avatar?: string;
+  avatar?: string
   /** 邮箱 */
-  email: string;
+  email: string
   /** 手机号 */
-  mobile: string;
+  mobile: string
   /** 性别 */
-  sex: string;
+  sex: string
   /** 住址 */
-  address: string;
+  address: string
   /** 籍贯 */
-  nativeAddress: string;
+  nativeAddress: string
   /** 身份证号码 */
-  idCard: string;
+  idCard: string
   /** 是否启用 */
-  isEnable: boolean;
+  isEnable: boolean
   /** 最后登录时间 */
-  lastLoginAt?: string;
+  lastLoginAt?: string
   /** 登录失败次数 */
-  loginFailCount?: number;
+  loginFailCount?: number
   /** 登录锁定时间 */
-  loginLockedUnitl?: string;
+  loginLockedUnitl?: string
   /** 入职时间 */
-  joinTime: string;
+  joinTime: string
   /** 离职时间 */
-  leaveTime?: string;
+  leaveTime?: string
   /** 部门ID */
-  departmentId?: string;
+  departmentId?: string
   /** 职位 */
-  position: string;
+  position: string
   /** 职位ID */
-  positionId?: string;
+  positionId?: string
   /** 学历 */
-  education: string;
+  education: string
   /** 毕业院校 */
-  graduateSchool: string;
+  graduateSchool: string
   /** 紧急联系人 */
-  emergencyContacts: string;
+  emergencyContacts: string
   /** 紧急联系人电话 */
-  emergencyContactPhone: string;
+  emergencyContactPhone: string
   /** 身份证照片 */
-  idPhoto?: string;
+  idPhoto?: string
   /** 银行卡账号 */
-  bankCard?: string;
+  bankCard?: string
   /** 银行卡照片 */
-  bankCardPhoto?: string;
+  bankCardPhoto?: string
   /** 简历 */
-  resume?: string;
+  resume?: string
   /** 政治面貌 */
-  politicalStatus: string;
+  politicalStatus: string
   /** 在职状态 */
-  status?: string;
+  status?: string
   /** 生日 */
-  birthday: string;
+  birthday: string
   /** 备注 */
-  remark?: string;
+  remark?: string
 }
 
 interface APIUpdateUserDto {
   /** 用户名 */
-  username?: string;
+  username?: string
   /** 密码 */
-  password?: string;
+  password?: string
   /** 姓名 */
-  name?: string;
+  name?: string
   /** 头像 */
-  avatar?: string;
+  avatar?: string
   /** 邮箱 */
-  email?: string;
+  email?: string
   /** 手机号 */
-  mobile?: string;
+  mobile?: string
   /** 性别 */
-  sex?: string;
+  sex?: string
   /** 住址 */
-  address?: string;
+  address?: string
   /** 籍贯 */
-  nativeAddress?: string;
+  nativeAddress?: string
   /** 身份证号码 */
-  idCard?: string;
+  idCard?: string
   /** 是否启用 */
-  isEnable?: boolean;
+  isEnable?: boolean
   /** 最后登录时间 */
-  lastLoginAt?: string;
+  lastLoginAt?: string
   /** 登录失败次数 */
-  loginFailCount?: number;
+  loginFailCount?: number
   /** 登录锁定时间 */
-  loginLockedUnitl?: string;
+  loginLockedUnitl?: string
   /** 入职时间 */
-  joinTime?: string;
+  joinTime?: string
   /** 离职时间 */
-  leaveTime?: string;
+  leaveTime?: string
   /** 部门ID */
-  departmentId?: string;
+  departmentId?: string
   /** 职位 */
-  position?: string;
+  position?: string
   /** 职位ID */
-  positionId?: string;
+  positionId?: string
   /** 学历 */
-  education?: string;
+  education?: string
   /** 毕业院校 */
-  graduateSchool?: string;
+  graduateSchool?: string
   /** 紧急联系人 */
-  emergencyContacts?: string;
+  emergencyContacts?: string
   /** 紧急联系人电话 */
-  emergencyContactPhone?: string;
+  emergencyContactPhone?: string
   /** 身份证照片 */
-  idPhoto?: string;
+  idPhoto?: string
   /** 银行卡账号 */
-  bankCard?: string;
+  bankCard?: string
   /** 银行卡照片 */
-  bankCardPhoto?: string;
+  bankCardPhoto?: string
   /** 简历 */
-  resume?: string;
+  resume?: string
   /** 政治面貌 */
-  politicalStatus?: string;
+  politicalStatus?: string
   /** 在职状态 */
-  status?: string;
+  status?: string
   /** 生日 */
-  birthday?: string;
+  birthday?: string
   /** 备注 */
-  remark?: string;
+  remark?: string
 }

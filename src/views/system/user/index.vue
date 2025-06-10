@@ -266,7 +266,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'email',
     title: '邮箱',
-    width: 100,
+    width: 170,
   },
   {
     field: 'mobile',
@@ -281,17 +281,17 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'address',
     title: '地址',
-    width: 100,
+    width: 170,
   },
   {
     field: 'nativeAddress',
     title: '籍贯',
-    width: 100,
+    width: 170,
   },
   {
     field: 'idCard',
     title: '身份证号码',
-    width: 100,
+    width: 200,
   },
   {
     field: 'isEnable',
@@ -316,12 +316,12 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'joinTime',
     title: '入职时间',
-    width: 100,
+    width: 170,
   },
   {
     field: 'leaveTime',
     title: '离职时间',
-    width: 100,
+    width: 170,
   },
   {
     field: 'position',
@@ -341,7 +341,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'graduateSchool',
     title: '毕业院校',
-    width: 100,
+    width: 170,
   },
   {
     field: 'emergencyContacts',
@@ -351,7 +351,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'emergencyContactPhone',
     title: '紧急联系人电话',
-    width: 100,
+    width: 170,
   },
   {
     field: 'idPhoto',
@@ -395,7 +395,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'createdAt',
     title: '创建时间',
-    width: 100,
+    width: 170,
   },
   {
     field: 'createdBy',
@@ -405,7 +405,7 @@ const tableColumn = ref<ITableColumn[]>([
   {
     field: 'updatedAt',
     title: '更新时间',
-    width: 100,
+    width: 170,
   },
   {
     field: 'updatedBy',
