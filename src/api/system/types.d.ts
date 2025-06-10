@@ -134,6 +134,10 @@ interface APIQueryDto {
   sortOrder?: 'asc' | 'desc';
 }
 
+interface APISimpleDepartmentDto {
+  name: string;
+}
+
 interface APIResponseUserDto {
   /** id */
   id: string;
@@ -170,7 +174,7 @@ interface APIResponseUserDto {
   /** 离职时间 */
   leaveTime?: string;
   /** 关联部门详情 */
-  department?: Record<string, any>;
+  department?: any;
   /** 部门ID */
   departmentId?: string;
   /** 职位 */
@@ -254,8 +258,6 @@ interface APICreateUserDto {
   joinTime: string;
   /** 离职时间 */
   leaveTime?: string;
-  /** 关联部门详情 */
-  department?: Record<string, any>;
   /** 部门ID */
   departmentId?: string;
   /** 职位 */
@@ -284,31 +286,11 @@ interface APICreateUserDto {
   status?: string;
   /** 生日 */
   birthday: string;
-  /** 创建时间 */
-  createdAt?: string;
-  /** 创建人 */
-  createdBy?: string;
-  /** 创建人ID */
-  createdId?: string;
-  /** 更新时间 */
-  updatedAt?: string;
-  /** 更新人 */
-  updatedBy?: string;
-  /** 更新人ID */
-  updatedId?: string;
-  /** 删除时间 */
-  deletedAt?: string;
-  /** 删除人 */
-  deletedBy?: string;
-  /** 删除人ID */
-  deletedId?: string;
   /** 备注 */
   remark?: string;
 }
 
 interface APIUpdateUserDto {
-  /** id */
-  id: string;
   /** 用户名 */
   username?: string;
   /** 密码 */
@@ -323,7 +305,7 @@ interface APIUpdateUserDto {
   mobile?: string;
   /** 性别 */
   sex?: string;
-  /** 地址 */
+  /** 住址 */
   address?: string;
   /** 籍贯 */
   nativeAddress?: string;
@@ -341,8 +323,6 @@ interface APIUpdateUserDto {
   joinTime?: string;
   /** 离职时间 */
   leaveTime?: string;
-  /** 部门 */
-  department?: Record<string, any>;
   /** 部门ID */
   departmentId?: string;
   /** 职位 */
@@ -371,12 +351,6 @@ interface APIUpdateUserDto {
   status?: string;
   /** 生日 */
   birthday?: string;
-  /** 删除时间 */
-  deletedAt?: string;
-  /** 删除人 */
-  deletedBy?: string;
-  /** 删除人ID */
-  deletedId?: string;
   /** 备注 */
   remark?: string;
 }

@@ -39,7 +39,7 @@ const { formData, resetFormData } = useFormData({
   address: '',
   nativeAddress: '',
   idCard: '',
-  isEnable: false,
+  isEnable: true,
   joinTime: '',
   position: '',
   education: '',
