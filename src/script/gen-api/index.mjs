@@ -255,6 +255,7 @@ function run(modelArg) {
 const swaggerJson = {
   common: { name: 'common', url: 'http://localhost:3000/api/docs/common-json' },
   system: { name: 'system', url: 'http://localhost:3000/api/docs/system-json' },
+  auth: { name: 'auth', url: 'http://localhost:3000/api/docs/auth-json' },
 }
 
 let swaggerSource, swaggerGroupName, outputDir

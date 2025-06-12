@@ -5,6 +5,7 @@ import type {
   InputNumberProps,
   FormProps,
   FormItemRule,
+  InputProps,
 } from 'element-plus'
 
 declare global {
@@ -38,7 +39,7 @@ declare global {
     render?: (prop, data) => JSX.Element
     rules?: FormItemRule[]
     props?: FormItemProps
-    widgetProps?: Partial<InputNumberProps>
+    widgetProps?: Partial<InputNumberProps> | Partial<InputProps>
   }
 }
 
