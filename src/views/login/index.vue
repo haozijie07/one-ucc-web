@@ -3,14 +3,17 @@
     <div ref="vantaRef" style="width: 100vw; height: 100vh; position: absolute"></div>
     <div class="form">
       <div class="title">欢迎</div>
-      <div style="flex-grow: 1">
+      <div>
         <HaoziForm
           v-model:model-value="formData"
           :form-config="formConfig"
           :form-props="formProp"
         />
       </div>
-      <el-button type="primary" @click="handleLogin">登录</el-button>
+      <div>
+        <el-checkbox size="large" v-model="isRememberPassword" label="记住密码"></el-checkbox>
+      </div>
+      <el-button class="login-btn" size="large" type="primary" @click="handleLogin">登录</el-button>
     </div>
   </div>
 </template>
@@ -21,6 +24,7 @@ import { HaoziForm } from '@/components/advancedComponents'
 import { useFormData } from '@/hooks/formData'
 import type { FormProps } from 'element-plus'
 import { AuthControllerLogin } from '@/api/auth/api'
+import { useRouter } from 'vue-router'
 
 const vantaRef = ref<HTMLElement | null>(null)
 let vantaEffect: any = null
@@ -56,12 +60,15 @@ const formConfig = ref<IFormConfig[]>([
   },
 ])
 
+const router = useRouter()
 async function handleLogin() {
   const res = await AuthControllerLogin(formData.value)
   if (res) {
-    console.log('%c⧭', 'color: #ffcc00', res)
+    router.push('/')
   }
 }
+
+const isRememberPassword = ref(false)
 
 onMounted(() => {
   if (vantaRef.value) {
@@ -93,7 +100,6 @@ onBeforeUnmount(() => {
 <style scope lang="scss">
 .form {
   position: relative;
-  height: 520px;
   width: 420px;
   top: 50%;
   left: 50%;
@@ -104,7 +110,7 @@ onBeforeUnmount(() => {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   /* 背景磨砂效果 */
   backdrop-filter: blur(2px);
-  padding: 15px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
 
@@ -113,6 +119,11 @@ onBeforeUnmount(() => {
     color: #333;
     font-size: 32px;
     font-weight: bold;
+    margin-bottom: 40px;
+  }
+
+  .login-btn {
+    margin-top: 20px;
   }
 }
 </style>

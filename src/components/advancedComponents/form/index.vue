@@ -9,7 +9,7 @@
   >
     <template v-for="item in processFormConfig" :key="item.prop">
       <el-form-item
-        :label="item.label + ':'"
+        :label="item.label"
         :prop="item.prop"
         :rules="item.rules"
         :disabled="item.disabled"
