@@ -25,6 +25,7 @@ import { useFormData } from '@/hooks/formData'
 import type { FormProps } from 'element-plus'
 import { AuthControllerLogin } from '@/api/auth/api'
 import { useRouter } from 'vue-router'
+import { useAppStorage } from '@/utils/storage'
 
 const vantaRef = ref<HTMLElement | null>(null)
 let vantaEffect: any = null
@@ -61,9 +62,13 @@ const formConfig = ref<IFormConfig[]>([
 ])
 
 const router = useRouter()
+const { state: accessToken } = useAppStorage('access_token')
+const { state: userInfo } = useAppStorage('user_info')
 async function handleLogin() {
   const res = await AuthControllerLogin(formData.value)
   if (res) {
+    accessToken.value = res.accessToken
+    userInfo.value = res.user
     router.push('/')
   }
 }
