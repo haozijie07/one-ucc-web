@@ -34,8 +34,8 @@ const formProp = ref<Partial<FormProps>>({
 })
 
 const { formData } = useFormData({
-  username: '',
-  password: '',
+  username: '王浩林',
+  password: '566363',
 })
 
 const formConfig = ref<IFormConfig[]>([
