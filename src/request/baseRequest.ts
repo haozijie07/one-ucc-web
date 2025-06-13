@@ -2,15 +2,16 @@ import axios from 'axios'
 import type { AxiosRequestConfig } from 'axios'
 import { getPending, addPending, removePending, hasPending } from './requestQueue'
 import { ElMessageBox } from 'element-plus'
+import { useAppStorage } from '@/utils/storage'
 
 export function createAxiosInstance(config: AxiosRequestConfig): RequestInstance {
   const instance = axios.create(config)
 
   instance.interceptors.request.use(
     (config: InternalRequestConfig) => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+      const { state: token } = useAppStorage('access_token')
+      if (token.value) {
+        config.headers.Authorization = `Bearer ${token.value}`
       }
 
       if (config.loading) {

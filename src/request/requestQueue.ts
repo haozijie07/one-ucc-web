@@ -1,5 +1,3 @@
-import type { RequestConfig } from './type'
-
 const pendingMap = new Map<string, Promise<any>>()
 
 export function generateRequestKey(config: RequestConfig): string {
