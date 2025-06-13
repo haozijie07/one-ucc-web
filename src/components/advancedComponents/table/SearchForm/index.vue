@@ -317,10 +317,11 @@ const props = defineProps<{
 
 const processedTableSearch = ref<ITableSearch[]>([])
 async function initTableSearch() {
-  const placeholderMap: Record<string, string> = {
+  const placeholderMap: Record<widgetType, string> = {
     text: '请输入',
     textarea: '请输入',
     select: '请选择',
+    multiselect: '请选择',
     date: '请选择',
     datetime: '请选择',
     daterange: '请选择',

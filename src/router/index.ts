@@ -33,6 +33,11 @@ const router = createRouter({
           name: 'department',
           component: () => import('@/views/system/department/index.vue'),
         },
+        {
+          path: '/system/position',
+          name: 'position',
+          component: () => import('@/views/system/position/index.vue'),
+        },
       ],
     },
     {

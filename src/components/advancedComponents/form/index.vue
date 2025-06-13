@@ -42,6 +42,24 @@
             />
           </el-select>
         </template>
+        <template v-else-if="item.type === 'multiselect'">
+          <el-select
+            v-model="formData[item.prop]"
+            :clearable="true"
+            :placeholder="item.placeholder"
+            :disabled="item.disabled"
+            :multiple="true"
+            v-bind="item.widgetProps"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="option in item.options"
+              :label="option.label"
+              :value="option.value"
+              :key="option.value"
+            />
+          </el-select>
+        </template>
         <template v-else-if="item.type === 'checkbox'">
           <el-checkbox-group
             v-model="formData[item.prop]"
@@ -174,6 +192,7 @@ async function initFormConfig(formConfig: IFormConfig[]) {
     text: '请输入',
     textarea: '请输入',
     select: '请选择',
+    multiselect: '请选择',
     date: '请选择',
     datetime: '请选择',
     daterange: '请选择',
@@ -192,9 +211,7 @@ async function initFormConfig(formConfig: IFormConfig[]) {
 
     // 如果有 optionsType，则异步获取 options
     if (item.optionsType) {
-      getSimpleOptionsList(item.optionsType).then((res) => {
-        finalItem.options = res
-      })
+      finalItem.options = await getSimpleOptionsList(item.optionsType)
     }
 
     // 设置默认 placeholder

@@ -6,6 +6,14 @@ interface APICommonResponse {
   data: Record<string, any>
 }
 
+interface APISimpleParentDto {
+  name: string
+}
+
+interface APISimpleLeaderDto {
+  name: string
+}
+
 interface APIResponseDepartmentDto {
   /** 主键 ID */
   id: string
@@ -15,9 +23,10 @@ interface APIResponseDepartmentDto {
   code?: string
   /** 上级部门 ID（用于树结构） */
   parentId?: string
-  parent?: Record<string, any>
+  /** 上级部门 */
+  parent?: any
   /** 部门负责人名称 */
-  leader?: string
+  leader?: any
   /** 部门负责人用户 ID（可选） */
   leaderId?: string
   /** 排序 */
@@ -53,8 +62,6 @@ interface APICreateDepartmentDto {
   code?: string
   /** 上级部门 ID（用于树结构） */
   parentId?: string
-  /** 部门负责人名称 */
-  leader?: string
   /** 部门负责人用户 ID（可选） */
   leaderId?: string
   /** 排序 */
@@ -72,8 +79,6 @@ interface APIUpdateDepartmentDto {
   code?: string
   /** 上级部门 ID（用于树结构） */
   parentId?: string
-  /** 部门负责人名称 */
-  leader?: string
   /** 部门负责人用户 ID（可选） */
   leaderId?: string
   /** 排序 */
@@ -107,6 +112,96 @@ interface APIQueryDto {
 }
 
 interface APISimpleDepartmentDto {
+  /** 部门id */
+  id: string
+  /** 部门名称 */
+  name: string
+}
+
+interface APIResponsePositionDto {
+  /** 职位ID */
+  id: string
+  /** 职位名称 */
+  name: string
+  /** 职位编码（可选） */
+  code?: string
+  /** 职位描述（可选） */
+  description?: string
+  /** 职位类别：技术岗、行政岗等 */
+  category?: string
+  /** 职位性质：全职、兼职、实习等 */
+  jobType?: string
+  /** 关联部门详情 */
+  department?: APISimpleDepartmentDto
+  /** 排序 */
+  sort: number
+  /** 是否启用 */
+  isEnable: boolean
+  /** 创建时间 */
+  createdAt: string
+  /** 创建人 */
+  createdBy: string
+  /** 创建人ID */
+  createdId?: string
+  /** 更新时间 */
+  updatedAt: string
+  /** 更新人 */
+  updatedBy?: string
+  /** 更新人ID */
+  updatedId?: string
+  /** 删除时间 */
+  deletedAt?: string
+  /** 删除人 */
+  deletedBy?: string
+  /** 删除人ID */
+  deletedId?: string
+  /** 备注 */
+  remark?: string
+}
+
+interface APICreatePositionDto {
+  /** 职位名称 */
+  name: string
+  /** 职位编码（可选） */
+  code?: string
+  /** 职位描述（可选） */
+  description?: string
+  /** 职位类别：技术岗、行政岗等 */
+  category?: string
+  /** 职位性质：全职、兼职、实习等 */
+  jobType?: string
+  /** 所属部门数组 */
+  departmentIds?: string[]
+  /** 排序 */
+  sort: number
+  /** 是否启用 */
+  isEnable: boolean
+  /** 备注 */
+  remark?: string
+}
+
+interface APIUpdatePositionDto {
+  /** 职位名称 */
+  name?: string
+  /** 职位编码（可选） */
+  code?: string
+  /** 职位描述（可选） */
+  description?: string
+  /** 职位类别：技术岗、行政岗等 */
+  category?: string
+  /** 职位性质：全职、兼职、实习等 */
+  jobType?: string
+  /** 所属部门数组 */
+  departmentIds?: string[]
+  /** 排序 */
+  sort?: number
+  /** 是否启用 */
+  isEnable?: boolean
+  /** 备注 */
+  remark?: string
+}
+
+interface APISimplePositionDto {
   name: string
 }
 
@@ -150,7 +245,7 @@ interface APIResponseUserDto {
   /** 部门ID */
   departmentId?: string
   /** 职位 */
-  position: string
+  position: any
   /** 职位ID */
   positionId?: string
   /** 学历 */
@@ -232,8 +327,6 @@ interface APICreateUserDto {
   leaveTime?: string
   /** 部门ID */
   departmentId?: string
-  /** 职位 */
-  position: string
   /** 职位ID */
   positionId?: string
   /** 学历 */
@@ -258,6 +351,8 @@ interface APICreateUserDto {
   status?: string
   /** 生日 */
   birthday: string
+  /** 薪资 */
+  salary?: number
   /** 备注 */
   remark?: string
 }
@@ -297,8 +392,6 @@ interface APIUpdateUserDto {
   leaveTime?: string
   /** 部门ID */
   departmentId?: string
-  /** 职位 */
-  position?: string
   /** 职位ID */
   positionId?: string
   /** 学历 */
@@ -323,6 +416,8 @@ interface APIUpdateUserDto {
   status?: string
   /** 生日 */
   birthday?: string
+  /** 薪资 */
+  salary?: number
   /** 备注 */
   remark?: string
 }

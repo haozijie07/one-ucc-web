@@ -16,7 +16,7 @@
             >修改</el-link
           >
           <el-link :underline="false" type="danger" @click="handleDelete(row)">删除</el-link>
-          <el-link ::underline="false" type="primary" @click="handleCru('用户详情', row, false)"
+          <el-link :underline="false" type="primary" @click="handleCru('用户详情', row, false)"
             >详情</el-link
           >
         </div>

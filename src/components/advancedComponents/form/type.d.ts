@@ -14,6 +14,7 @@ declare global {
     | 'textarea'
     | 'number'
     | 'select'
+    | 'multiselect'
     | 'checkbox'
     | 'radio'
     | 'date'
