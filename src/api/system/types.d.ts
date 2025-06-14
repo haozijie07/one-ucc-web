@@ -421,3 +421,68 @@ interface APIUpdateUserDto {
   /** 备注 */
   remark?: string
 }
+
+interface APIResponseDictTypeDto {
+  /** id */
+  id: string
+  /** 编码，如 sex、status */
+  code: string
+  /** 名称 */
+  name: string
+  /** 说明 */
+  description?: string
+  /** 是否启用 */
+  isEnable: boolean
+  /** 排序 */
+  sort: number
+  /** 创建时间 */
+  createdAt: string
+  /** 创建人 */
+  createdBy: string
+  /** 创建人ID */
+  createdId?: string
+  /** 更新时间 */
+  updatedAt: string
+  /** 更新人 */
+  updatedBy?: string
+  /** 更新人ID */
+  updatedId?: string
+  /** 删除时间 */
+  deletedAt?: string
+  /** 删除人 */
+  deletedBy?: string
+  /** 删除人ID */
+  deletedId?: string
+  /** 备注 */
+  remark?: string
+}
+
+interface APICreateDictTypeDto {
+  /** 编码，如 sex、status */
+  code: string
+  /** 名称 */
+  name: string
+  /** 说明 */
+  description?: string
+  /** 是否启用 */
+  isEnable: boolean
+  /** 排序 */
+  sort: number
+  /** 备注 */
+  remark?: string
+}
+
+interface APIUpdateDictTypeDto {
+  /** 编码，如 sex、status */
+  code?: string
+  /** 名称 */
+  name?: string
+  /** 说明 */
+  description?: string
+  /** 是否启用 */
+  isEnable?: boolean
+  /** 排序 */
+  sort?: number
+  /** 备注 */
+  remark?: string
+}

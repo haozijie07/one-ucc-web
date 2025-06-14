@@ -32,9 +32,9 @@ export function generateTableFormConfig(schemas) {
   for (const name in schemas) {
     if (!name.startsWith('Response')) continue
     const schema = schemas[name]
-    tableColumn.push(`const ${name}TableColumn = [`)
-    tableSearch.push(`const ${name}TableSearch = [`)
-    formConfig.push(`const ${name}FormConfig = [`)
+    tableColumn.push(`const ${name}TableColumn = ref<ITableColumn[]>([`)
+    tableSearch.push(`const ${name}TableSearch = ref<ITableSearch[]>([`)
+    formConfig.push(`const ${name}FormConfig = ref<IFormConfig[]>([`)
     formData.push(`const ${name}FormData = ref<API${name}>({`)
     // schema.properties是一个对象，里面是每个字段的信息：字段：{ type, description }
     const props = schema.properties || {}
@@ -78,9 +78,9 @@ export function generateTableFormConfig(schemas) {
         formData.push(`   ${key}: ${genDefaultValue(type)},`)
       }
     }
-    tableSearch.push(']\n')
-    tableColumn.push(']\n')
-    formConfig.push(']\n')
+    tableSearch.push('])\n')
+    tableColumn.push('])\n')
+    formConfig.push('])\n')
     formData.push('})\n')
   }
 

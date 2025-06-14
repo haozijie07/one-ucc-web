@@ -161,3 +161,57 @@ export async function PositionControllerPageList(
   const url = `/api/position/pageList`
   return await uccAxios.post(url, data, { ...config })
 }
+
+/** 新增 dictType */
+export async function DictTypeControllerCreate(
+  data: APICreateDictTypeDto,
+  config?: RequestConfig,
+): Promise<boolean> {
+  const url = `/api/dictType`
+  return await uccAxios.post(url, data, { ...config })
+}
+
+/** 获取所有 dictType */
+export async function DictTypeControllerFindAll(
+  config?: RequestConfig,
+): Promise<APIResponseDictTypeDto[]> {
+  const url = `/api/dictType`
+  return uccAxios.get(url, { ...config })
+}
+
+/** 根据 id 获取 DictType 详情 */
+export async function DictTypeControllerFindById(
+  params: { id: string },
+  config?: RequestConfig,
+): Promise<APIResponseDictTypeDto> {
+  const url = `/api/dictType/${params.id}`
+  return uccAxios.get(url, { ...config })
+}
+
+/** 修改 dictType */
+export async function DictTypeControllerUpdate(
+  params: { id: string },
+  data: APIUpdateDictTypeDto,
+  config?: RequestConfig,
+): Promise<boolean> {
+  const url = `/api/dictType/${params.id}`
+  return await uccAxios.patch(url, data, { ...config })
+}
+
+/** 根据 ID 删除 dictType */
+export async function DictTypeControllerDelete(
+  params: { id: string },
+  config?: RequestConfig,
+): Promise<boolean> {
+  const url = `/api/dictType/${params.id}`
+  return uccAxios.delete(url, { ...config })
+}
+
+/** 分页查询 dictType */
+export async function DictTypeControllerPageList(
+  data: APIQueryDto,
+  config?: RequestConfig,
+): Promise<IPageListData<APIResponseDictTypeDto>> {
+  const url = `/api/dictType/pageList`
+  return await uccAxios.post(url, data, { ...config })
+}
