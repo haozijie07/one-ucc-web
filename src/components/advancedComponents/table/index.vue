@@ -30,6 +30,11 @@
         >
           <vxe-column v-if="mergeTableConfig.showCheckbox" type="checkbox" width="40"></vxe-column>
           <vxe-column v-if="mergeTableConfig.showSeq" type="seq" width="70"></vxe-column>
+          <vxe-column v-if="mergeTableConfig.expand" type="expand" width="60">
+            <template #content="{ row }">
+              <slot name="expand" :row="row"></slot>
+            </template>
+          </vxe-column>
           <vxe-column title="操作" width="auto" fixed="right">
             <template #default="scope">
               <slot name="action" :row="scope.row"></slot>
@@ -64,7 +69,7 @@
           </template>
         </vxe-table>
       </div>
-      <template #footer>
+      <template v-if="mergeTableConfig.showPage" #footer>
         <div class="haozi-table-footer">
           <el-pagination
             v-model:current-page="pageIndex"
@@ -105,6 +110,7 @@ const mergeTableConfig = computed(() => {
     showSeq: true,
     showCheckbox: false,
     showPage: true,
+    showHeader: true,
     pageSize: [20, 100, 200, 300, 400],
     showFooter: false,
     ...props.tableConfig,

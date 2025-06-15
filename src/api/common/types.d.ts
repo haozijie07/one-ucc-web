@@ -1,14 +1,16 @@
 // Auto-generated from swagger
 
 interface APICommonResponse {
-  code: number;
-  message: string;
-  data: Record<string, any>;
+  code: number
+  message: string
+  data: Record<string, any>
 }
 
 interface APIGetOptionResponseDto {
   /** label */
-  label: string;
+  label: string
   /** 通常是 id */
-  value: string;
+  value: string
 }
+
+type OptionsType = 'department' | 'position' | 'dictType' | 'user'

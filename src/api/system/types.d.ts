@@ -486,3 +486,68 @@ interface APIUpdateDictTypeDto {
   /** 备注 */
   remark?: string
 }
+
+interface APIResponseDictItemDto {
+  /** id */
+  id: string
+  /** 字典类型 */
+  dictType: Record<string, any>
+  /** zh_CN */
+  dictTypeId: string
+  /** 存储值 */
+  value: string
+  /** 显示名称 */
+  label: string
+  /** 描述 */
+  description?: string
+  /** 是否启用 */
+  isEnable: boolean
+  /** 是否默认 */
+  isDefault: boolean
+  /** 排序 */
+  sort: number
+  /** 颜色样式（如 #00ff00 或状态颜色名） */
+  color?: string
+  /** 扩展字段，如 */
+  extra?: Record<string, any>
+}
+
+interface APICreateDictItemDto {
+  /** zh_CN */
+  dictTypeId: string
+  /** 存储值 */
+  value: string
+  /** 显示名称 */
+  label: string
+  /** 描述 */
+  description?: string
+  /** 是否启用 */
+  isEnable: boolean
+  /** 是否默认 */
+  isDefault: boolean
+  /** 排序 */
+  sort: number
+  /** 颜色样式（如 #00ff00 或状态颜色名） */
+  color?: string
+}
+
+interface APIUpdateDictItemDto {
+  /** 字典类型 */
+  dictType?: Record<string, any>
+  /** zh_CN */
+  dictTypeId?: string
+  /** 存储值 */
+  value?: string
+  /** 显示名称 */
+  label?: string
+  /** 描述 */
+  description?: string
+  /** 是否启用 */
+  isEnable?: boolean
+  /** 是否默认 */
+  isDefault?: boolean
+  /** 排序 */
+  sort?: number
+  /** 颜色样式（如 #00ff00 或状态颜色名） */
+  color?: string
+}

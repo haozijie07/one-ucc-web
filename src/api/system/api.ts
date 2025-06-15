@@ -215,3 +215,57 @@ export async function DictTypeControllerPageList(
   const url = `/api/dictType/pageList`
   return await uccAxios.post(url, data, { ...config })
 }
+
+/** 新增 dictItem */
+export async function DictItemControllerCreate(
+  data: APICreateDictItemDto,
+  config?: RequestConfig,
+): Promise<boolean> {
+  const url = `/api/dictItem`
+  return await uccAxios.post(url, data, { ...config })
+}
+
+/** 获取所有 dictItem */
+export async function DictItemControllerFindAll(
+  config?: RequestConfig,
+): Promise<APIResponseDictItemDto[]> {
+  const url = `/api/dictItem`
+  return uccAxios.get(url, { ...config })
+}
+
+/** 根据 id 获取 DictItem 详情 */
+export async function DictItemControllerFindById(
+  params: { id: string },
+  config?: RequestConfig,
+): Promise<APIResponseDictItemDto> {
+  const url = `/api/dictItem/${params.id}`
+  return uccAxios.get(url, { ...config })
+}
+
+/** 修改 dictItem */
+export async function DictItemControllerUpdate(
+  params: { id: string },
+  data: APIUpdateDictItemDto,
+  config?: RequestConfig,
+): Promise<boolean> {
+  const url = `/api/dictItem/${params.id}`
+  return await uccAxios.patch(url, data, { ...config })
+}
+
+/** 根据 ID 删除 dictItem */
+export async function DictItemControllerDelete(
+  params: { id: string },
+  config?: RequestConfig,
+): Promise<boolean> {
+  const url = `/api/dictItem/${params.id}`
+  return uccAxios.delete(url, { ...config })
+}
+
+/** 分页查询 dictItem */
+export async function DictItemControllerPageList(
+  data: APIQueryDto,
+  config?: RequestConfig,
+): Promise<IPageListData<APIResponseDictItemDto>> {
+  const url = `/api/dictItem/pageList`
+  return await uccAxios.post(url, data, { ...config })
+}

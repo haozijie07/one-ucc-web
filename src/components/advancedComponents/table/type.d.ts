@@ -6,7 +6,9 @@ declare global {
     showCheckbox?: boolean
     showSearch?: boolean
     showPage?: boolean
+    showHeader?: boolean
     pageSize?: number[]
+    expand?: boolean
   }
 
   interface ITableColumn {
@@ -58,7 +60,7 @@ declare global {
     operator?: Operator
     defaultValue?: string | number
     options?: SelectOptionType[]
-    optionsType?: 'user' | 'department'
+    optionsType?: OptionsType
     rules?: FormItemRule[]
     itemProps?:
       | InputProps
