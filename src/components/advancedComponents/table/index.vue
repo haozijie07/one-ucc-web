@@ -25,7 +25,7 @@
           stripe
           :loading="loading"
           :data="tableData"
-          :height="'100%'"
+          :height="'auto'"
           v-bind="mergeVxeTableProps"
         >
           <vxe-column v-if="mergeTableConfig.showCheckbox" type="checkbox" width="40"></vxe-column>

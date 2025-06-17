@@ -37,6 +37,7 @@ declare global {
       value: string
     }[]
     optionsType?: OptionsType
+    dictType?: string
     render?: (prop, data) => JSX.Element
     rules?: FormItemRule[]
     props?: FormItemProps

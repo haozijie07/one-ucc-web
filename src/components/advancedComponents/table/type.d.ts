@@ -61,6 +61,7 @@ declare global {
     defaultValue?: string | number
     options?: SelectOptionType[]
     optionsType?: OptionsType
+    dictType?: string
     rules?: FormItemRule[]
     itemProps?:
       | InputProps

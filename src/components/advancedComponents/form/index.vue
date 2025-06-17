@@ -183,7 +183,7 @@ const props = defineProps<{
 }>()
 
 import { ref, watch } from 'vue'
-import { getSimpleOptionsList } from '@/utils/common-fn'
+import { getDictOptionsList, getSimpleOptionsList } from '@/utils/common-fn'
 
 const processFormConfig = ref<IFormConfig[]>([])
 
@@ -209,9 +209,17 @@ async function initFormConfig(formConfig: IFormConfig[]) {
   for (const item of formConfig) {
     const finalItem = { ...item }
 
+    if (finalItem.dictType && finalItem.optionsType) {
+      console.warn('dictType和optionsType不能同时存在')
+    }
+
     // 如果有 optionsType，则异步获取 options
-    if (item.optionsType) {
-      finalItem.options = await getSimpleOptionsList(item.optionsType)
+    if (finalItem.optionsType) {
+      finalItem.options = await getSimpleOptionsList(finalItem.optionsType)
+    }
+
+    if (finalItem.dictType) {
+      finalItem.options = await getDictOptionsList(finalItem.dictType)
     }
 
     // 设置默认 placeholder

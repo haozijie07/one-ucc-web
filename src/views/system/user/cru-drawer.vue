@@ -114,10 +114,7 @@ const formConfig = ref<IFormConfig[]>([
     label: '性别',
     type: 'radio',
     rules: [{ required: true, message: '性别不能为空' }],
-    options: [
-      { label: '男', value: '男' },
-      { label: '女', value: '女' },
-    ],
+    dictType: 'sex',
   },
   {
     prop: 'address',

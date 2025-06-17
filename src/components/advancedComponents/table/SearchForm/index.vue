@@ -309,7 +309,7 @@
 import { onMounted, ref } from 'vue'
 import { operatorMap } from '../utils/operator-map'
 import type { ElForm } from 'element-plus'
-import { getSimpleOptionsList } from '@/utils/common-fn'
+import { getDictOptionsList, getSimpleOptionsList } from '@/utils/common-fn'
 
 const props = defineProps<{
   tableSearch: ITableSearch[]
@@ -336,20 +336,24 @@ async function initTableSearch() {
   const result: ITableSearch[] = []
   for (const index in props.tableSearch) {
     const item = props.tableSearch[index]
-    const options: any = []
-    if (item.optionsType) {
-      getSimpleOptionsList(item.optionsType).then((res: any[]) => {
-        res.forEach((item) => {
-          options.push(item)
-        })
-      })
+
+    if (item.dictType && item.optionsType) {
+      console.warn('dictType和optionsType不能同时存在')
     }
+
+    if (item.optionsType) {
+      item.options = await getSimpleOptionsList(item.optionsType)
+    }
+    if (item.dictType) {
+      item.options = await getDictOptionsList(item.dictType)
+    }
+
     result.push({
       ...item,
       placeholder: item.placeholder || placeholderMap[item.type] + item.title,
       startPlaceholder: item.startPlaceholder || placeholderMap[item.type] + '开始' + item.title,
       endPlaceholder: item.endPlaceholder || placeholderMap[item.type] + '结束' + item.title,
-      options: item.options || options,
+      options: item.options,
     })
   }
   processedTableSearch.value = result

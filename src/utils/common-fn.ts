@@ -1,4 +1,4 @@
-import { OptionControllerGetOptions } from '@/api/common/api'
+import { OptionControllerGetDictOptions, OptionControllerGetOptions } from '@/api/common/api'
 
 /**
  * 深度拷贝函数
@@ -86,9 +86,15 @@ export function deepClone<T>(source: T, weakMap = new WeakMap<any, any>()): T {
 /**
  * 获取通用下拉选项列表
  */
-export async function getSimpleOptionsList(
-  type: 'user' | 'department',
-): Promise<APIGetOptionResponseDto[]> {
+export async function getSimpleOptionsList(type: OptionsType): Promise<APIGetOptionResponseDto[]> {
   const res = await OptionControllerGetOptions({ type })
+  return res
+}
+
+/**
+ * 获取字典下拉选项列表
+ */
+export async function getDictOptionsList(dictCode: string): Promise<APIGetOptionResponseDto[]> {
+  const res = await OptionControllerGetDictOptions({ dictCode })
   return res
 }

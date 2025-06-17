@@ -10,3 +10,12 @@ export async function OptionControllerGetOptions(
   const url = `/api/common/options/${params.type}`
   return uccAxios.get(url, { ...config })
 }
+
+/** 获取字典下拉选项列表 */
+export async function OptionControllerGetDictOptions(
+  params: { dictCode: string },
+  config?: RequestConfig,
+): Promise<APIGetOptionResponseDto[]> {
+  const url = `/api/common/options/dictOptions/${params.dictCode}`
+  return uccAxios.get(url, { ...config })
+}

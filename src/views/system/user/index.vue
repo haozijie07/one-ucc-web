@@ -58,7 +58,8 @@ const tableSearch = ref<ITableSearch[]>([
   {
     field: 'sex',
     title: '性别',
-    type: 'text',
+    type: 'radio',
+    dictType: 'sex',
   },
   {
     field: 'address',
