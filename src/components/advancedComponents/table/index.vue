@@ -98,7 +98,7 @@ const props = withDefaults(
     tableSearch?: ITableSearch[]
     tableColumn: ITableColumn[]
     tableConfig?: ITableConfig
-    getDataFn: (data: ITableSearchFormData) => Promise<any>
+    getDataFn?: (data: ITableSearchFormData) => Promise<any>
     vxeTableProps?: VxeTableProps
   }>(),
   {},
@@ -127,6 +127,7 @@ const searchFormData = ref<any>({})
 
 /** 点击搜索 */
 async function onSearch() {
+  if (!props.getDataFn) return
   loading.value = true
   const conditions: Condition[] = []
   for (const index in props.tableSearch) {

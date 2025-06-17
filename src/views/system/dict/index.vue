@@ -68,7 +68,6 @@
 
 <script setup lang="tsx" name="dict">
 import {
-  DictItemControllerPageList,
   DictTypeControllerDelete,
   DictTypeControllerPageList,
 } from '@/api/system/api'
@@ -227,12 +226,6 @@ function handleDelete(row: any) {
 
 const dictItemCruDrawerRef = useTemplateRef('dictItemCruDrawerRef')
 /* ---------------------------------- 新增字典项 ---------------------------------- */
-async function getDictItemFn(conditions: any) {
-  const res = await DictItemControllerPageList(conditions)
-  if (res) {
-    return res
-  }
-}
 const dictItemTableSearch = ref<ITableSearch[]>([
   {
     field: 'dictTypeId',
