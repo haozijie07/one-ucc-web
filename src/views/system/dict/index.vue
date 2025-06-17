@@ -9,7 +9,7 @@
       :get-data-fn="getDataFn"
       v-model:table-data="tableData"
     >
-      <template #expand>
+      <template #expand="{row}">
         <haozi-table
           ref="tableRef"
           :table-search="dictItemTableSearch"
@@ -17,7 +17,7 @@
           :table-config="{ showSearch: false, showPage: false, showHeader: false }"
           :vxe-table-props="{ stripe: false, border: false }"
           style="padding: 0"
-          :get-data-fn="getDictItemFn"
+          v-model:table-data="row.items"
         >
           <template #action="{ row }">
             <div style="display: flex; gap: 0 15px">
